@@ -12,7 +12,7 @@ typedef struct Player
     bool isAlive;
 } Player;
 
-int main()
+int main(void)
 {
     Player thePlayer = {.name = "Player1", .level = 25, .isAlive = true};
 

@@ -9,7 +9,7 @@
 
 #define MY_STRING_LENGTH 25
 
-int main()
+int main(void)
 {
     wchar_t wideCharStrSrc[MY_STRING_LENGTH + 1] = L"This is a wide string";
     wchar_t wideCharStrDst[MY_STRING_LENGTH + 1] = L"";

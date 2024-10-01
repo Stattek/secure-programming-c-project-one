@@ -9,7 +9,7 @@
 
 #define MY_STRING_LENGTH 20
 
-int main()
+int main(void)
 {
     const char *originString = "abcdefghijklmnopqrstuvwxyz";
     char destString[MY_STRING_LENGTH + 1] = ""; // plus one for the null-terminating character

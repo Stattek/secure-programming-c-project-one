@@ -27,7 +27,7 @@ bool safe_asin(double num, double *resultOut)
     return false;
 }
 
-int main()
+int main(void)
 {
     double result = 0;
     double num = 0;

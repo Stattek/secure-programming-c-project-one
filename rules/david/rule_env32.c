@@ -35,7 +35,7 @@ void exit3(void)
     return;
 }
 
-int main()
+int main(void)
 {
     // functions registered with atexit() should be called in reverse-order when the program exits
     if (atexit(exit1) || atexit(exit2) || atexit(exit3))

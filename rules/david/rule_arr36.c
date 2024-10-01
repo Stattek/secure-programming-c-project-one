@@ -7,10 +7,11 @@
 
 #define MY_ARR_SIZE 5
 
-int main()
+int main(void)
 {
     int arr[MY_ARR_SIZE];
     int *curArrPtr = arr;
+    // subtract pointers that point to the same array
     int freeElements = (&(arr[MY_ARR_SIZE]) - curArrPtr);
 
     printf("Input number to add to the array: ");
@@ -21,6 +22,8 @@ int main()
     {
         *curArrPtr = inputNum;
         curArrPtr++; // increment pointer
+
+        // subtract pointers that point to the same array
         freeElements = (&(arr[MY_ARR_SIZE]) - curArrPtr);
 
         if (freeElements > 0)

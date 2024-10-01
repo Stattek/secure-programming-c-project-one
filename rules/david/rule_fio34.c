@@ -4,7 +4,7 @@
  */
 #include <stdio.h>
 
-int main()
+int main(void)
 {
     // create a file
     FILE *inputFile = fopen("fio34.txt", "r");

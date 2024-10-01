@@ -8,7 +8,7 @@
 
 #define MY_STRING_LENGTH 25
 
-int main()
+int main(void)
 {
     char *myHeapStr = NULL;
 
