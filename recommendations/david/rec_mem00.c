@@ -43,6 +43,11 @@ int main(void)
 
     // create array on the heap
     int *arr = malloc(NUM_ARRAY_ELEMENTS * sizeof(int));
+    if (!arr)
+    {
+        printf("Error allocating array\n");
+        return 1;
+    }
 
     fillRandIntArray(arr, NUM_ARRAY_ELEMENTS);
 
