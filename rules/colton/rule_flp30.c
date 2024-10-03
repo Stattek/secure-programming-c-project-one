@@ -10,7 +10,7 @@ Why it is Important: This rule is important because if you do not follow this ru
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
+int main(void){
 
     int int_array[] = {1,3,5,7,9,11};
 

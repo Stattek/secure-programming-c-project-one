@@ -10,7 +10,7 @@ Why it is Important: The reason that this rule is important is because errors in
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(){
+int main(void){
     int number_entered;
     //take user input
     printf("Enter number to get the absolute value: ");

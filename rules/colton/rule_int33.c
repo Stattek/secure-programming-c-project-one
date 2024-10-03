@@ -9,7 +9,7 @@ Why it is Important: This rule is important because if you do not follow this ru
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
+int main(void){
     int dividend = 0;
     printf("Enter the number used as the dividend: ");
     scanf("%d",&dividend);

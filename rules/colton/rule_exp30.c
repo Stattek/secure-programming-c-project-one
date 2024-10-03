@@ -12,7 +12,7 @@ Why it is Important: This is important because not following this rule can cause
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
+int main(void){
     int number_holder = 0;
     printf("Enter number to have 1 added to and then doubled: ");
     scanf("%d",&number_holder);

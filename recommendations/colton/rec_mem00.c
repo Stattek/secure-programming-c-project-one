@@ -15,7 +15,7 @@ void printName(const char *name){
     printf("Name is %s",name);
 }
 
-int main(){
+int main(void){
     char *name = malloc(32);
     strcpy(name,"Bob");
     printName(name);    

@@ -10,7 +10,7 @@ Why it is important: This rule is important because if not followed then at best
 #include <stdio.h>
 
 
-int main(){
+int main(void){
 
     int int_array1[3][4];
     int int_array2[4][2];

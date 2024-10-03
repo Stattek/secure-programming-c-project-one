@@ -12,7 +12,7 @@ Why it is important: This rule is important because if you do not free memory th
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(){
+int main(void){
     int *int_pointer = (int *)malloc(5*sizeof(int));
     int product = 0;
     for(int i = 0; i < 5; i++){

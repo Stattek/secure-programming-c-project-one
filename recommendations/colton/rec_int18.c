@@ -10,7 +10,7 @@ Why it is important: This recommendation important because if not followed it ca
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
+int main(void){
 
     int small_number = 12314213;
     long long larger_number = 135135236923581294;

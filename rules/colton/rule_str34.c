@@ -10,7 +10,7 @@ Why it is Important: This is an important rule because this has caused vulnerabi
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(){
+int main(void){
     char string[12] = "Test";
     int sum = 0;
     for(int i = 0; i < sizeof(string)/sizeof(string[0]); i++){

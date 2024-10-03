@@ -14,7 +14,7 @@ struct toyota{
     int models[4];
 };
 
-int main(){
+int main(void){
     struct toyota my_toyotas = {.models[0] = 2012,.models[1] = 2015,.models[2] = 2020,.models[3] = 2024};
     int total = 0;
     for(int i = 0; i < 4; i ++){

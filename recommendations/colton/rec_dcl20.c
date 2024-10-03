@@ -16,7 +16,7 @@ void printStatement(void){
 };
 
 
-int main(){
+int main(void){
 
     printStatement();
 

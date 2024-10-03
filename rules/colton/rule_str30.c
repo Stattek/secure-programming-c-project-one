@@ -10,7 +10,7 @@ Why it is important: It is important because very often when modifiying a string
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
+int main(void){
     char character_name[16] = "Sally";
     printf("Character name is currently: %s\n",character_name);
     

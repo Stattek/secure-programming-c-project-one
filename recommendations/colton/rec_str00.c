@@ -9,7 +9,7 @@ Why it is important: This recommendation is important because if it is followed 
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
+int main(void){
 
     FILE *file_pointer;
     int character;
