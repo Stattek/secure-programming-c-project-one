@@ -53,6 +53,10 @@ int main(void)
     printf("\n\nOutput of ls:\n");
 
     // execute ls on the directory specified
-    execlp("/bin/ls", "ls", directoryStr, (char *)0);
+    int err = execlp("/bin/ls", "ls", directoryStr, (char *)0);
+    if (err == -1)
+    {
+        fprintf(stderr, "Error in executing ls\n");
+    }
     return 0;
 }

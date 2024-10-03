@@ -45,7 +45,7 @@ int main(void)
     int *arr = malloc(NUM_ARRAY_ELEMENTS * sizeof(int));
     if (!arr)
     {
-        printf("Error allocating array\n");
+        fprintf(stderr, "Error allocating array\n");
         return 1;
     }
 

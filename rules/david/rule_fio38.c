@@ -12,7 +12,7 @@ int main(void)
     FILE *inputFile = fopen("./fio38.txt", "r");
     if (!inputFile)
     {
-        printf("Error in opening file.");
+        fprintf(stderr, "Error in opening file.");
         return 1;
     }
 

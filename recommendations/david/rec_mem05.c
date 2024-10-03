@@ -48,7 +48,7 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
         int err = fputs(curStr, dstFile);
         if (err == EOF)
         {
-            printf("Error writing to file\n");
+            fprintf(stderr, "Error writing to file\n");
             return true;
         }
 
@@ -58,7 +58,7 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
             err = fputs("\n", dstFile);
             if (err == EOF)
             {
-                printf("Error writing to file\n");
+                fprintf(stderr, "Error writing to file\n");
                 return true;
             }
         }

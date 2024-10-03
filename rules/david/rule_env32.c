@@ -40,7 +40,7 @@ int main(void)
     // functions registered with atexit() should be called in reverse-order when the program exits
     if (atexit(exit1) || atexit(exit2) || atexit(exit3))
     {
-        perror("Error registering function in atexit()");
+        fprintf(stderr, "Error registering function in atexit()\n");
         return 1;
     }
 
