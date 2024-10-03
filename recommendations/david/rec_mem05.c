@@ -13,7 +13,7 @@
 // TODO: doc
 bool writeInputToFile(FILE *dstFile, size_t bufSize)
 {
-    if (bufSize <= 0)
+    if (bufSize <= 0 || !dstFile)
     {
         // error
         return true;
