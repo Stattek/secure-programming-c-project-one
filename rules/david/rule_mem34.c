@@ -16,7 +16,7 @@ int main(void)
     myHeapStr = malloc(MY_STRING_LENGTH);
     if (myHeapStr == NULL)
     {
-        printf("String not allocated by malloc.");
+        fprintf(stderr, "Could not allocate heap space for string\n");
         // exit so we don't possibly try to free memory that wasn't dynamically allocated
         return 1;
     }
@@ -27,6 +27,7 @@ int main(void)
     printf("My string on the heap: %s\n", myHeapStr);
     // only freeing the memory that was dynamically allocated
     free(myHeapStr);
-    
+    myHeapStr = NULL;
+
     return 0;
 }

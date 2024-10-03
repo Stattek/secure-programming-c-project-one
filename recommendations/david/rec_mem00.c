@@ -56,5 +56,6 @@ int main(void)
 
     // free on the same level of abstraction
     free(arr);
+    arr = NULL;
     return 0;
 }

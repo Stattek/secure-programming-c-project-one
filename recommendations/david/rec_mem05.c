@@ -22,7 +22,7 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
     char *curStr = malloc(bufSize);
     if (!curStr)
     {
-        printf("Could not allocate string\n");
+        fprintf(stderr, "Could not allocate string\n");
         return true;
     }
 
@@ -65,6 +65,7 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
     }
 
     free(curStr);
+    curStr = NULL;
 
     // if we get here, there is no error
     return false;
