@@ -1,11 +1,4 @@
-/*
-Description: Rule Int33-C states that when doing division or operations with a remainder do no end up resulting in a scnario where you are dividing by 0. Essentially
-    you need to check to make sure you are not dividing by zero or using zero when using % operator.
 
-Why it is Important: This rule is important because if you do not follow this rule you can cause a divide by zero error which can crash your program abnormally and
-    denial of service. 
-
-*/
 #include <stdio.h>
 #include <stdlib.h>
 

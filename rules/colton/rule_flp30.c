@@ -1,12 +1,4 @@
-/*
-Description: Rule FLP30-C states that you should not use floating point numbers for counters of loops. So, you should never use a float in a for loop based on this
-    rule.
 
-Why it is Important: This rule is important because if you do not follow this rule your loops can have unexpected behavior such as never ending loops or loops that
-    have a variance in how many interations will be completed.
-
-
-*/
 #include <stdio.h>
 #include <stdlib.h>
 
