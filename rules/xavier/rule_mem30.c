@@ -33,8 +33,19 @@ int main()
     *ptr_two == 25;
     printf("Value before freeing memory: %d\n", *ptr_two);
 
-    // todo: fix
+    // freeing ptr_two and then assiging a null value to it
+    // this is what u should do
+    free(ptr_two);
+    ptr_two = NULL;
 
+    if (ptr_two == NULL)
+    {
+        printf("ptr_two has been freed and set to NULL");
+    }
+    else
+    {
+        printf("ptr_two has NOT been freed and set to NULL properly");
+    }
 
     return 0;
 }
