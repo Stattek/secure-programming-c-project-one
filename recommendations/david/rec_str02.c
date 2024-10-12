@@ -10,6 +10,13 @@
 
 #define DIRECTORY_STRING_LENGTH 1024
 
+/**
+ * @brief Checks that a string is valid and only contains characters in the
+ * specified character string.
+ *
+ * @param targetStr The string to validate.
+ * @param validCharacters The valid characters.
+ */
 bool isValidString(char *targetStr, const char *validCharacters)
 {
     bool isValid = false;
