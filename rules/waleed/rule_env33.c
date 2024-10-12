@@ -1,6 +1,7 @@
 /**
  * Author: Waleed
- * Summary: Instead of calling `system("rm example.txt")`, the `remove()` function is used to delete the file safely.
+ * Summary: Instead of calling `system("rm example.txt")`, the `remove()` 
+ * function is used to delete the file safely.
  */
 #include <stdio.h>
 

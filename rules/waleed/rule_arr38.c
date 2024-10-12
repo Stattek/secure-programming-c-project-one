@@ -1,6 +1,7 @@
 /**
  * Author: Waleed
- * Summary: This code checks that the destination buffer is large enough before copying, preventing invalid pointers from being formed during the `strcpy` operation.
+ * Summary: This code checks that the destination buffer is large enough before copying, 
+ * preventing invalid pointers from being formed during the `strcpy` operation.
  */
 #include <string.h>
 #include <stdio.h>

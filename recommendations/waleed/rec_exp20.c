@@ -1,6 +1,9 @@
 /**
  * Author: Waleed
- * Summary: In this example, the code explicitly compares integers to `0`, booleans to `true` or `false`, and pointers to `NULL`. This practice avoids ambiguity and potential bugs arising from implicit type conversions or misunderstandings about how certain values evaluate in conditional contexts.
+ * Summary: In this example, the code explicitly compares integers to `0`, 
+ * booleans to `true` or `false`, and pointers to `NULL`. 
+ * This practice avoids ambiguity and potential bugs arising from implicit type conversions or 
+ * misunderstandings about how certain values evaluate in conditional contexts.
  */
 #include <stdio.h>
 #include <stdbool.h>
