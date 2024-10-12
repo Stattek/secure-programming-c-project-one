@@ -10,9 +10,11 @@ int main(void)
     const unsigned long long int MASK = -1;
     printf("The mask: %llu\n", MASK);
 
+    // bitshift 2 to the right
     unsigned long long int myVal = __LONG_LONG_MAX__ >> 2;
     printf("The original value: %llu\n", myVal);
 
+    // XOR the values
     unsigned long long int result = MASK ^ myVal;
     printf("Result of XOR: %llu\n", result);
     return 0;
