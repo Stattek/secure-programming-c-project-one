@@ -5,17 +5,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
+#include <errno.h>
 
 #define BUFFER_SIZE 1024
+#define MAX_CHOICE 2
 
-// TODO: doc
-bool writeFile(FILE *dstFile, int bufSize)
+/**
+ * @brief Safely takes and writes user input to a file.
+ *
+ * @param dstFile The destination file to write to.
+ * @param bufSize The buffer size for writing to file.
+ *
+ * @returns true on error, false otherwise.
+ */
+bool writeInputToFile(FILE *dstFile, size_t bufSize)
 {
-    if (!dstFile || bufSize <= 0)
+    if (bufSize <= 0 || !dstFile)
     {
-        return true; // error
+        // error
+        return true;
     }
 
+    /*
+    Recommendation MEM05: Avoid large stack allocations.
+    Done by putting curStr on the stack for writing to the file.
+    */
     char *curStr = malloc(bufSize);
     if (!curStr)
     {
@@ -61,24 +76,163 @@ bool writeFile(FILE *dstFile, int bufSize)
         }
     }
 
+    /*
+    Rule MEM34: only free memory allocated dynamically.
+    Done by only freeing curStr, which is on the heap.
+
+    Recommendation MEM00: Allocate and free memory in the same module, at the same level of abstraction.
+    Done by freeing curStr, which is created at the beginning of this function.
+    */
     free(curStr);
     curStr = NULL;
+
+    // if we get here, there is no error
+    return false;
 }
 
-// TODO: doc
+/**
+ * @brief Checks that a string is valid and only contains characters in the
+ * specified character string.
+ *
+ * @param targetStr The string to validate.
+ * @param validCharacters The valid characters.
+ */
+bool isValidString(char *targetStr, const char *validCharacters)
+{
+    bool isValid = false;
+
+    /*
+    Rule STR38: Do not confuse narrow and wide character strings and functions.
+    Done by using narrow character string functions on narrow strings in this function.
+    */
+    char *lastCharPtr = targetStr + strlen(targetStr) - 1; // find the last character of the string
+    if (lastCharPtr && *lastCharPtr == '\n')
+    {
+        *lastCharPtr = '\0'; // make this the new end of the string if it's a newline char
+    }
+
+    // find the length of the string until we find a character that is invalid
+    size_t numValidChars = strspn(targetStr, validCharacters);
+    if (numValidChars == strlen(targetStr))
+    {
+        // if our input string is all correct characters then it is sanitized
+        isValid = true;
+    }
+
+    return isValid;
+}
+
+/**
+ * @brief Gets the name of the file from the user to write to.
+ *
+ * @param fileNameStr The name of the file to write to.
+ * @param fileNameStrLen The length of fileNameStr
+ */
+void getFileName(char *fileNameStr, int fileNameStrLen)
+{
+    static const char VALID_CHARACTERS[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/._-";
+
+    printf("Enter the name of the file\n");
+
+    /*
+    Rule FIO38: Do not copy a FILE object.
+    This is done by copying a pointer to stdin rather than taking a copy by-value.
+     */
+    FILE *my_stdin = stdin;
+    bool isValid = false;
+    do
+    {
+        printf(">> ");
+        fgets(fileNameStr, fileNameStrLen, my_stdin);
+
+        if (isValidString(fileNameStr, VALID_CHARACTERS))
+        {
+            isValid = true;
+        }
+    } while (!isValid);
+}
+
+/**
+ * @brief Prompts the user and controls flow to the various functions
+ * in the program.
+ */
 void promptUser(void)
 {
-    // FUTURE: for writing a file, let the user specify the name (sanitize it to satisfy a rule)
-    printf("Choose an option:\n\t1. Read a file\n\t2. Write a file\n\t");
+    printf("Choose an option:\n\t1. Read a file\n\t2. Write a file\n");
+
+    // the valid characters we are reading
+    static const char VALID_CHARACTERS[] = "0123456789";
+
+    char buf[BUFFER_SIZE] = "";
+    long int userInput = 0;
+
+    bool isValidInput = false;
+    do
+    {
+        printf(">> ");
+        if (fgets(buf, BUFFER_SIZE, stdin) == NULL)
+        {
+            fprintf(stderr, "Error reading user input\n");
+            return;
+        }
+        bool isNumStr = isValidString(buf, VALID_CHARACTERS);
+
+        if (isNumStr)
+        {
+            /*
+            Rule STR32: Do not pass a non-null-terminate character sequence to a library function that expects a string.
+
+            This is done by passing a null-terminated string (since fgets always returns a null-terminated string at a max size of bufferSize-1)
+            to the strlen() function, which expects a null-terminated string.
+            */
+            char *lastCharPtr = buf + strlen(buf) - 1; // find the last character of the string
+
+            errno = 0;
+            userInput = strtol(buf, &lastCharPtr, 10);
+            if (errno == EINVAL || errno == ERANGE)
+            {
+                perror("User input value invalid or out of range\n");
+            }
+
+            if (userInput >= 1 && userInput <= MAX_CHOICE)
+            {
+                // this number is valid
+                isValidInput = true;
+            }
+        }
+    } while (!isValidInput);
+
+    switch (userInput)
+    {
+    case 1:
+        break;
+    case 2:
+
+        /*
+        Recommendation STR02: Sanitize data passed to complex subsystems.
+        Done by using function getFileName that validates a user input file name before using it to open a file with fopen().
+        */
+        char fileName[BUFFER_SIZE] = "";
+        getFileName(fileName, BUFFER_SIZE);
+
+        FILE *dstFile = fopen(fileName, "w");
+        if (!dstFile)
+        {
+            fprintf(stderr, "Error opening destination file\n");
+            return;
+        }
+
+        writeInputToFile(dstFile, BUFFER_SIZE);
+        break;
+    default: // impossible
+        fprintf(stderr, "User chose an invalid choice\n");
+        break;
+    }
 }
 
 int main(void)
 {
     promptUser();
-
-    FILE *outFile = fopen("outfile.txt", "w");
-
-    writeFile(outFile, BUFFER_SIZE);
 
     return 0;
 }
