@@ -1,21 +1,25 @@
 /**
  * Author: David Slay
- * Summary: Rule INT17-C example working code
+ * Summary: Recommendation INT17-C example working code
  */
 #include <stdio.h>
+#include <limits.h>
 
 int main(void)
 {
-    // create mask with all bits set to 1
-    const unsigned long long int MASK = -1;
-    printf("The mask: %llu\n", MASK);
+    /*
+    Recommendation INT17-C: Define integer constants in an implementation-independent manner
+    Create mask with all bits set to 1 by setting to -1, which will set all bits to 1 on different implementations.
+    */
+    const unsigned int MASK = -1;
+    printf("The mask: %u\n", MASK);
 
-    // bitshift 2 to the right
-    unsigned long long int myVal = __LONG_LONG_MAX__ >> 2;
-    printf("The original value: %llu\n", myVal);
+    // bitshift 2 to the right to have all bits except the first two set to 1
+    unsigned int myVal = UINT_MAX >> 2;
+    printf("The original value: %u\n", myVal);
 
     // XOR the values
-    unsigned long long int result = MASK ^ myVal;
-    printf("Result of XOR: %llu\n", result);
+    unsigned int result = MASK ^ myVal;
+    printf("Result of XOR: %u\n", result);
     return 0;
 }
