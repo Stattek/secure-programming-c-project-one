@@ -10,7 +10,12 @@
 
 #define NUM_ARRAY_ELEMENTS 5
 
-// TODO: doc
+/**
+ * @brief Prints out the integer array.
+ *
+ * @param arr The array to print.
+ * @param arrLen The length of the array.
+ */
 void printIntArray(int *arr, int arrLen)
 {
     printf("[");
@@ -26,7 +31,12 @@ void printIntArray(int *arr, int arrLen)
     printf("]\n");
 }
 
-// TODO: doc
+/**
+ * @brief Fills an array of integers with random numbers.
+ *
+ * @param arr The array to fill.
+ * @param arrLen The length of the array.
+ */
 void fillRandIntArray(int *arr, int arrLen)
 {
     for (int i = 0; i < arrLen; i++)
@@ -57,5 +67,6 @@ int main(void)
     // free on the same level of abstraction
     free(arr);
     arr = NULL;
+
     return 0;
 }
