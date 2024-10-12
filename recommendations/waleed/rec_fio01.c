@@ -1,6 +1,9 @@
 /**
  * Author: Waleed
- * Summary: In this code, the program reads a file name from the user and validates it to prevent path traversal and absolute path usage. It constructs a safe file path by prefixing a known directory and ensures memory allocation is handled correctly. This careful handling of file names mitigates security risks associated with file operations.
+ * Summary: In this code, the program reads a file name from the user and validates 
+ * it to prevent path traversal and absolute path usage. It constructs a safe file path 
+ * by prefixing a known directory and ensures memory allocation is handled correctly. 
+ * This careful handling of file names mitigates security risks associated with file operations.
  */
 #define _GNU_SOURCE // For asprintf()
 #include <stdio.h>
