@@ -12,7 +12,7 @@
 #include <limits.h>
 
 /**
- * @brief
+ * @brief This function checks if a given filename is valid.
  *
  * @param filename
  * @return int

@@ -8,10 +8,10 @@
 #include <stdio.h>
 
 /**
- * @brief
+ * @brief This function prints the elements of a given integer array.
  *
- * @param arr
- * @param size
+ * @param arr Pointer to the integer array.
+ * @param size The number of elements in the array.
  */
 void print_array(int *arr, size_t size)
 {

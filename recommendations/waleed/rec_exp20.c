@@ -58,7 +58,7 @@ int get_status(void)
 }
 
 /**
- * @brief
+ * @brief Check if a condition is met
  *
  * @return true
  * @return false
