@@ -1,7 +1,12 @@
 /**
-    Author: Xavier Zamora
-    Sumary: Rule INT30-C working code, ensure that unsigned int operations do not wrap
-    https://wiki.sei.cmu.edu/confluence/display/c/INT30-C.+Ensure+that+unsigned+integer+operations+do+not+wrap
+ * @file rule_int30.c
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2024-10-12
+ * 
+ * @copyright Copyright (c) 2024
+ * 
  */
 
 #include <stdio.h>
@@ -9,6 +14,12 @@
 #include <limits.h>
 #include <time.h>
 
+/**
+ * @brief compares two ints and determines if they are too big to perform multiplication on
+ * 
+ * @param a first int to compare
+ * @param b second int to compare
+ */
 void tooBig(unsigned int a, unsigned int b)
 {
     unsigned int mult;
@@ -32,4 +43,3 @@ int main()
     tooBig(a, b);
     return 0;
 }
-
