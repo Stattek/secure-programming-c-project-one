@@ -1,0 +1,37 @@
+
+
+/**
+ * @file DCL01-C.c
+ * @author Aayaan Shaikh
+ * @brief demonstrates proper naming of variables in subscopes
+ * @version 0.1
+ * @date 2024-10-12
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+#include <stdio.h>
+
+int main()
+{
+
+  int numbers[10];
+
+  for (int i = 0; i < 10; i++)
+  {
+    numbers[i] = i;
+  }
+
+  printf("Numbers from 1 to 10 and thier squares:\n");
+  for (int i = 0; i < 10; i++)
+  {
+    // DCL01-C: Do not reuse variable names in subscopes
+    // avoided using another variable named i since it was already defined in larger scope
+    // used variable name j instead
+    int j = (i * i);
+
+    printf("%d squared: %d, \n", numbers[i], j);
+  }
+
+  return 0;
+}
