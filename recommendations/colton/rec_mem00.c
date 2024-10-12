@@ -13,9 +13,11 @@ void printName(const char *name){
 
 int main(void){
     char *name = malloc(32);
+    ///copies the string Bob to the name variable
     strcpy(name,"Bob");
+    ///calls the print name function
     printName(name);    
-
+    ///frees the name variable from the heap
     free(name);
     return 0;
 }

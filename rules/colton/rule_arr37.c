@@ -9,6 +9,7 @@ struct toyota{
 int main(void){
     struct toyota my_toyotas = {.models[0] = 2012,.models[1] = 2015,.models[2] = 2020,.models[3] = 2024};
     int total = 0;
+    ///loop to go through the struct
     for(int i = 0; i < 4; i ++){
         total += my_toyotas.models[i];
     }

@@ -11,7 +11,7 @@ void printStatement(void){
 
 
 int main(void){
-
+    ///calls the test statement
     printStatement();
 
     return 0;
