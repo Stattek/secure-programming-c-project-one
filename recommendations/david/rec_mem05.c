@@ -10,7 +10,14 @@
 
 #define MY_BUFFER_SIZE 1024
 
-// TODO: doc
+/**
+ * @brief Safely takes and writes user input to a file.
+ *
+ * @param dstFile The destination file to write to.
+ * @param bufSize The buffer size for writing to file.
+ *
+ * @returns true on error, false otherwise.
+ */
 bool writeInputToFile(FILE *dstFile, size_t bufSize)
 {
     if (bufSize <= 0 || !dstFile)
