@@ -1,6 +1,7 @@
 /**
  * Author: David Slay
- * Summary: Rule MEM05-C example working code
+ * Summary: Recommendation MEM05-C, recommendation MEM00-C, and
+ * rule MEM34-C example working code
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +27,10 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
         return true;
     }
 
+    /*
+    Recommendation MEM05-C: Avoid large stack allocations
+    Done by allocating a large string on the heap for writing to a file.
+    */
     char *curStr = malloc(bufSize);
     if (!curStr)
     {
@@ -71,6 +76,13 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
         }
     }
 
+    /*
+    Recommendation MEM00-C: Allocate and free memory in the same module, at the same level of abstraction
+    free dynamically allocated memory on the same level of abstraction
+
+    Rule MEM34-C:Only free memory allocated dynamically
+    Only freeing dynamically allocated memory, as this string can only possibly be on the heap.
+    */
     free(curStr);
     curStr = NULL;
 
