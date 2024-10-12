@@ -1,12 +1,18 @@
 /**
  * Author: Waleed
- * Summary: In this example, `sizeof(array)` gives the total size of the array in bytes, 
- * and dividing it by `sizeof(array[0])` calculates the number of elements. 
- * The `print_array` function receives the array pointer and its size, 
+ * Summary: In this example, `sizeof(array)` gives the total size of the array in bytes,
+ * and dividing it by `sizeof(array[0])` calculates the number of elements.
+ * The `print_array` function receives the array pointer and its size,
  * avoiding the misuse of `sizeof` on a pointer.
  */
 #include <stdio.h>
 
+/**
+ * @brief This function prints the elements of a given integer array.
+ *
+ * @param arr Pointer to the integer array.
+ * @param size The number of elements in the array.
+ */
 void print_array(int *arr, size_t size)
 {
     for (size_t i = 0; i < size; i++)
