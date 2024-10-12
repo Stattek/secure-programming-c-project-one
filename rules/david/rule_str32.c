@@ -15,9 +15,14 @@ int main(void)
     char destString[MY_STRING_LENGTH + 1] = ""; // plus one for the null-terminating character
 
     // we can safely copy this many characters and have a null-terminating character at the end of the string
+    // even though originString is longer than the size of destString
     strncpy(destString, originString, MY_STRING_LENGTH);
 
-    // This string is null-terminated, so there should be no problems printing it
+    /*
+    Rule STR32-C: Do not pass a non-null-terminated character sequence to a library function that expects a string
+    Pass a null-terminated string to printf(), which looks prints until it reaches a null-terminating character.
+    This will prevent undefined behavior.
+    */
     printf("%s\n", destString);
     return 0;
 }

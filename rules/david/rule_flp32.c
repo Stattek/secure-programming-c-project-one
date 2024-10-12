@@ -7,15 +7,19 @@
 #include <math.h>
 
 /**
- * @brief Safely does asin(), checking to see if it can be done.
+ * @brief Safely does acos(), checking to see if it can be done.
  *
- * @param num The number to do the asin() on.
+ * @param num The number to do the acos() on.
  * @param resultOut The output result.
  *
  * @returns true on error, false on success.
  */
-bool safe_asin(double num, double *resultOut)
+bool safe_acos(double num, double *resultOut)
 {
+    /*
+    Rule FLP32-C: Prevent or detect domain and range errors in math functions
+    Checks the domain that acos() can do to avoid domain errors.
+    */
     if (!resultOut || !isgreaterequal(num, -1.0) || !islessequal(num, 1.0))
     {
         // outside of desired range of (-1 <= x <= 1) or resultOut is NULL
@@ -23,7 +27,7 @@ bool safe_asin(double num, double *resultOut)
     }
 
     // safely do this math now
-    *resultOut = asin(num);
+    *resultOut = acos(num);
     return false;
 }
 
@@ -32,7 +36,7 @@ int main(void)
     double result = 0;
     double num = 0;
 
-    printf("Input number to perform asin on: ");
+    printf("Input number to perform acos on: ");
 
     if (scanf("%lf", &num) <= 0)
     {
@@ -40,9 +44,9 @@ int main(void)
         return 1;
     }
 
-    if (safe_asin(num, &result))
+    if (safe_acos(num, &result))
     {
-        fprintf(stderr, "Could not perform safe_asin (num: %lf result: %lf)\n", num, result);
+        fprintf(stderr, "Could not perform safe_acos (num: %lf result: %lf)\n", num, result);
         return 1;
     }
 
