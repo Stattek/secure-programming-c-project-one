@@ -8,6 +8,26 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+/**
+ * @brief Get the status object
+ *
+ * @return int
+ */
+int get_status(void);
+/**
+ * @brief
+ *
+ * @return true
+ * @return false
+ */
+bool check_condition(void);
+/**
+ * @brief Get the data object
+ *
+ * @return char*
+ */
+char *get_data(void);
+
 int main(void)
 {
     int status_code = get_status();         // Assume this function returns an int status
