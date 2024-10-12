@@ -7,25 +7,46 @@
 #include <stdbool.h>
 #include <string.h>
 #include <errno.h>
+#include <time.h>
 
 #define BUFFER_SIZE 1024
-#define MAX_CHOICE 2
+#define MAX_CHOICE 1 // maximum number of choices
 
 /**
- * @brief Safely takes and writes user input to a file.
+ * @brief Does a typing test and prints the user input to a file along with results.
  *
  * @param dstFile The destination file to write to.
  * @param bufSize The buffer size for writing to file.
  *
  * @returns true on error, false otherwise.
  */
-bool writeInputToFile(FILE *dstFile, size_t bufSize)
+bool doTypingTest(FILE *dstFile, size_t bufSize)
 {
     if (bufSize <= 0 || !dstFile)
     {
         // error
         return true;
     }
+
+    // possible words to use for the typing test
+    static const char *possibleWords[] = {
+        "the",
+        "an",
+        "to",
+        "help",
+        "test",
+        "know",
+        "tell",
+        "when",
+        "program",
+        "find",
+        "time",
+        "year",
+        "back",
+        "you",
+        "because",
+    };
+    const int possibleWordsLen = sizeof(possibleWords) / sizeof(char *);
 
     /*
     Recommendation MEM05: Avoid large stack allocations.
@@ -38,9 +59,23 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
         return true;
     }
 
-    printf("Type your document below or type \":q\" on a new line\n\n");
-    while (fgets(curStr, bufSize, stdin))
+    int numWordsTyped = 0; // number of words correctly typed by user
+    bool hasTypedIncorrectly = false;
+
+    // start timer
+    time_t startTime = time(NULL);
+    do
     {
+        // get random word
+        const char *randWordStr = possibleWords[rand() % possibleWordsLen];
+        printf("%s\n>> ", randWordStr);
+
+        if (fgets(curStr, bufSize, stdin) == NULL)
+        {
+            fprintf(stderr, "Error reading user input\n");
+            return true;
+        }
+
         size_t curStrLen = strlen(curStr);
 
         bool printNewLine = false;
@@ -50,31 +85,71 @@ bool writeInputToFile(FILE *dstFile, size_t bufSize)
             curStr[curStrLen - 1] = '\0';
             printNewLine = true; // we should print the new line character later
         }
-        if (strncmp(curStr, ":q", bufSize) == 0)
+        if (strncmp(curStr, randWordStr, bufSize) != 0)
         {
-            // break from the loop if the user types ":q" on a new line
-            break;
+            // the word was typed incorrectly
+            hasTypedIncorrectly = true;
+        }
+        else
+        {
+            // word typed correctly
+            numWordsTyped++;
         }
 
-        // print the string that we read
-        int err = fputs(curStr, dstFile);
-        if (err == EOF)
+        int writeErr;
+        if (!hasTypedIncorrectly)
         {
-            fprintf(stderr, "Error writing to file\n");
-            return true;
-        }
-
-        if (printNewLine)
-        {
-            // print the newline character if we removed it earlier
-            err = fputs("\n", dstFile);
-            if (err == EOF)
+            // write the string that we read
+            writeErr = fputs(curStr, dstFile);
+            if (writeErr == EOF)
             {
                 fprintf(stderr, "Error writing to file\n");
                 return true;
             }
         }
+        else
+        {
+            // write the mistake that was made
+            char mistakeOutput[BUFFER_SIZE] = "";
+            snprintf(mistakeOutput, BUFFER_SIZE, "%s <--(Your mistake)", curStr);
+
+            writeErr = fputs(mistakeOutput, dstFile);
+            if (writeErr == EOF)
+            {
+                fprintf(stderr, "Error writing to file\n");
+                return true;
+            }
+        }
+
+        if (printNewLine)
+        {
+            // write the newline character if we removed it earlier
+            writeErr = fputs("\n", dstFile);
+            if (writeErr == EOF)
+            {
+                fprintf(stderr, "Error writing to file\n");
+                return true;
+            }
+        }
+    } while (!hasTypedIncorrectly);
+
+    // get elapsed time
+    time_t endTime = time(NULL);
+    double secondsElapsed = difftime(endTime, startTime);
+
+    // create formatted string
+    char outputStr[BUFFER_SIZE] = "";
+    snprintf(outputStr, BUFFER_SIZE, "You typed %d words in %lf seconds!", numWordsTyped, secondsElapsed);
+
+    // write to file
+    int writeErr = fputs(outputStr, dstFile);
+    if (writeErr == EOF)
+    {
+        fprintf(stderr, "Error writing results to file\n");
+        return true;
     }
+
+    printf("Results written to file!\n");
 
     /*
     Rule MEM34: only free memory allocated dynamically.
@@ -158,7 +233,7 @@ void getFileName(char *fileNameStr, int fileNameStrLen)
  */
 void promptUser(void)
 {
-    printf("Choose an option:\n\t1. Read a file\n\t2. Write a file\n");
+    printf("Choose an option:\n\t1. Do typing test\n");
 
     // the valid characters we are reading
     static const char VALID_CHARACTERS[] = "0123456789";
@@ -205,8 +280,6 @@ void promptUser(void)
     switch (userInput)
     {
     case 1:
-        break;
-    case 2:
 
         /*
         Recommendation STR02: Sanitize data passed to complex subsystems.
@@ -222,7 +295,7 @@ void promptUser(void)
             return;
         }
 
-        writeInputToFile(dstFile, BUFFER_SIZE);
+        doTypingTest(dstFile, BUFFER_SIZE);
         break;
     default: // impossible
         fprintf(stderr, "User chose an invalid choice\n");
@@ -232,6 +305,8 @@ void promptUser(void)
 
 int main(void)
 {
+    // seed random number generator
+    srand(time(NULL));
     promptUser();
 
     return 0;
