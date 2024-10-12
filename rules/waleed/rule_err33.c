@@ -1,6 +1,7 @@
 /**
  * Author: Waleed
- * Summary: In this example, the program checks the return values of `fopen` and `fclose` to ensure that file operations are successful, handling any errors appropriately.
+ * Summary: In this example, the program checks the return values of `fopen` and 
+ * `fclose` to ensure that file operations are successful, handling any errors appropriately.
  */
 #include <stdio.h>
 
