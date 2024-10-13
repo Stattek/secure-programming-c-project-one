@@ -12,6 +12,12 @@
 
 #define MAXIMUM 10
 
+/**
+ * @brief generate random numbers using rand() (the predictable function)
+ * 
+ * @param output output number
+ * @param length length of number
+ */
 void generateRandomNumbersWrong(char *output, size_t length)
 {
     for (size_t i = 0; i < length; i++)
@@ -21,6 +27,12 @@ void generateRandomNumbersWrong(char *output, size_t length)
     output[length] = '\0';
 }
 
+/**
+ * @brief generate random numbers using random() (the better, less predictable function)
+ * 
+ * @param output output number
+ * @param length length of number
+ */
 void generateRandomNumbersRight(char *output, size_t length)
 {
     for (size_t i = 0; i < length; i++)
