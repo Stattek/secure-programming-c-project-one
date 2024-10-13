@@ -1,5 +1,5 @@
 /**
- * Author: David Slay, Aayaan, 
+ * Author: David Slay, Aayaan, Xavier Zamora
  * Summary: Final program for program one
  */
 #include <stdio.h>
@@ -10,9 +10,11 @@
 #include <time.h>
 #include <ctype.h>
 #include <pthread.h>
+#include <limits.h>
+#include <stdint.h>
 
 #define BUFFER_SIZE 1024
-#define MAX_CHOICE 2 // maximum number of choices
+#define MAX_CHOICE 3 // maximum number of choices
 
 /*
 PRE02-C: Macro replacement lists should be parenthesized
@@ -39,6 +41,118 @@ void getFileName(char *fileNameStr, int fileNameStrLen);
 void evenPercent(const char *filename);
 void *processFileEp(void *arg);
 void promptUser(void);
+FILE *openPasswordFile(const char *filename);
+void readPasswordFromFile(char *password, size_t size, FILE *file);
+unsigned int generateUnsignedNumberFromPassword(const char *password);
+int generateSignedNumberFromPassword(const char *password);
+bool authenticate(unsigned int savedUnsigned, int savedSigned, const char *password);
+
+/**
+ * Xavier Zamora
+ * @brief Opens a file and retrieves file pointer.
+ *
+ * Demonstration of rule MSC41-C, never hard code sensitive information.
+ * We store the password in a separate file so no user can obtain this source code and access the password.
+ *
+ * @param filename Name of file that contains the password.
+ * @return FILE* Pointer to file.
+ */
+FILE *openPasswordFile(const char *filename)
+{
+    FILE *file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        perror("Error: Could not open password file.\n");
+        exit(EXIT_FAILURE);
+    }
+    return file;
+}
+
+/**
+ * Xavier Zamora
+ * @brief Reads password from password file and read password.
+ *
+ * @param password Pointer to buffer where password will be stored.
+ * @param size Size of buffer to ensure password fits within buffer.
+ * @param file Pointer to file.
+ */
+void readPasswordFromFile(char *password, size_t size, FILE *file)
+{
+    if (fgets(password, size, file) == NULL)
+    {
+        printf("Error: Failed to read password from file!\n");
+        fclose(file);
+        exit(EXIT_FAILURE);
+    }
+    fclose(file);
+    password[strcspn(password, "\n")] = 0; // removing newline char
+}
+
+/**
+ * Xavier Zamora
+ * @brief Generates an unsigned integer from password ASCII data for authentication purposes and ensures the int does not wrap.
+ *
+ * Demonstration of rule INT30-C, ensure that unsigned int operations do not wrap.
+ *
+ * @param password Input password string.
+ * @return unsigned int
+ */
+unsigned int generateUnsignedNumberFromPassword(const char *password)
+{
+    unsigned int sum = 0;
+    for (size_t i = 0; i < strlen(password); i++)
+    {
+        if (UINT_MAX - sum < (unsigned int)password[i])
+        {
+            printf("Unsigned integer wrapping occured.\n");
+            return UINT_MAX;
+        }
+        sum += (unsigned int)password[i];
+    }
+    return sum;
+}
+
+/**
+ * Xavier Zamora
+ * @brief Generates a signed integer from password ASCII data for authentication purposes.
+ *
+ * Demonstration of rule INT32-C, ensure that operations on signed ints do not result in overflow.
+ *
+ * @param password Input password string.
+ * @return signed int
+ */
+int generateSignedNumberFromPassword(const char *password)
+{
+    int product = 1;
+    for (size_t i = 0; i < strlen(password); i++)
+    {
+        product *= (int)password[i];
+
+        if (product > INT_MAX || product < INT_MIN)
+        {
+            product %= INT_MAX;
+        }
+    }
+    return product;
+}
+
+/**
+ * Xavier Zamora
+ * @brief Compares outputs from previous two functions with password input and returns true if equal, and false if not equal.
+ *
+ * @param savedUnsigned Unsigned integer obtained from password.
+ * @param savedSigned Signed integer obtained from password.
+ * @param password Password to be authenticated.
+ * @return true if equal
+ * @return false if not equal
+ */
+bool authenticate(unsigned int savedUnsigned, int savedSigned, const char *password)
+{
+    unsigned int unsignedCheck = generateUnsignedNumberFromPassword(password);
+    int signedCheck = generateSignedNumberFromPassword(password);
+
+    return (unsignedCheck == savedUnsigned && signedCheck == savedSigned);
+}
 
 /**
  * @brief Does a typing test and prints the user input to a file along with results.
@@ -422,7 +536,7 @@ void *processFileEp(void *arg)
  */
 void promptUser(void)
 {
-    printf("Choose an option:\n\t1. Do typing test\n\t2. Read and calculate percentage of even digits from file\n");
+    printf("Choose an option:\n\t1. Do typing test\n\t2. Read and calculate percentage of even digits from file\n\t3. Password authentication.\n");
 
     // the valid characters we are reading
     static const char VALID_CHARACTERS[] = "0123456789";
@@ -468,8 +582,8 @@ void promptUser(void)
 
     switch (userInput)
     {
-    case 1:
-
+    case 1: // David Slay
+    {
         /*
         Recommendation STR02: Sanitize data passed to complex subsystems.
         Done by using function getFileName that validates a user input file name before using it to open a file with fopen().
@@ -486,14 +600,62 @@ void promptUser(void)
 
         doTypingTest(dstFile, BUFFER_SIZE);
         break;
-
-    case 2:
+    }
+    case 2: // Aayan
+    {
         char fileName_ep[BUFFER_SIZE] = "";
         getFileName(fileName_ep, BUFFER_SIZE);
 
         evenPercent(fileName_ep); // call to evenPercent to process the file
         break;
+    }
+    case 3: // Xavier Zamora
+    {
+        FILE *file = openPasswordFile("password.txt");
 
+        /*
+        Rule STR31-C, ensure storage for strings has sufficient space for character data.
+        It is highly unlikely for a password to exceed 100 characters.
+
+        Recommendation ARR02-C, explicitly specify array bounds, even if implicitly defined by initializer.
+        */
+        char password[100];
+        readPasswordFromFile(password, sizeof(password), file);
+
+        // generating signed and unsigned ints
+        unsigned int unsignedNum = generateUnsignedNumberFromPassword(password);
+        int signedNum = generateSignedNumberFromPassword(password);
+
+        // clearing password memory
+        memset((void *)password, 0, strlen(password));
+
+        printf("Desired Unsigned Authentication Code: %u\n", unsignedNum);
+        printf("Desired Signed Authentication Code: %d\n", signedNum);
+
+        // user password attempt
+        char passwordAttempt[100];
+        printf("Enter your password: \n");
+        fgets(passwordAttempt, sizeof(passwordAttempt), stdin);
+        passwordAttempt[strcspn(passwordAttempt, "\n")] = 0; // remove newline char
+        unsigned int enteredUnsigned = generateUnsignedNumberFromPassword(passwordAttempt);
+        int enteredSigned = generateSignedNumberFromPassword(passwordAttempt);
+
+        /*
+        Recommendation MSC01-C, strive for logical completeness.
+        Ensuring if-else statement accounts for both True/False values.
+        */
+        if (authenticate(unsignedNum, signedNum, passwordAttempt))
+        {
+            printf("\nAuthentication succeeded!\n");
+        }
+        else
+        {
+            printf("\nAuthentication failed, your authentication values based on entered password:\n");
+            printf("Generated Unsigned Integer: %u\n", enteredUnsigned);
+            printf("Generated Signed Integer: %d\n", enteredSigned);
+        }
+        break;
+    }
     default: // impossible
         fprintf(stderr, "User chose an invalid choice\n");
         break;
