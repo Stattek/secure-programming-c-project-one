@@ -7,12 +7,10 @@
  * @version 0.1
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 #include <stdio.h>
 
-int main()
+int main(void)
 {
 
   int numbers[10];
@@ -22,7 +20,7 @@ int main()
     numbers[i] = i;
   }
 
-  printf("Numbers from 1 to 10 and thier squares:\n");
+  printf("Numbers from 1 to 10 and their squares:\n");
   for (int i = 0; i < 10; i++)
   {
     // DCL01-C: Do not reuse variable names in subscopes

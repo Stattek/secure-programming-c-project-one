@@ -5,8 +5,6 @@
  * @version 0.1
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 #include <stdatomic.h>
 #include <stdio.h>
@@ -14,10 +12,10 @@
 /**
  * @brief return the square of atomic n
  *
- * @param n
- * @return int
+ * @param n the number to square
+ * @returns the squared number
  */
-int get_square(int n)
+int getSquare(int n)
 {
   // CON40-C: Do not refer to an atomic variable twice in an expression
   // avoided refering to atomic var twice in expression
@@ -25,11 +23,11 @@ int get_square(int n)
   return n * n;
 }
 
-int main()
+int main(void)
 {
   atomic_int n = ATOMIC_VAR_INIT(5);
 
-  printf("n^2 is: %d", get_square(n));
+  printf("n^2 is: %d\n", getSquare(n));
 
   return 0;
 }

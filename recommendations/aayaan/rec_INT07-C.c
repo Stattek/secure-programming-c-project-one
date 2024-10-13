@@ -6,13 +6,11 @@
  * @version 0.1
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 #include <stdio.h>
 #include <math.h>
 
-int main()
+int main(void)
 {
   // INT07-C: Use only explicitly signed or unsigned char type for numeric values
   // avoided non-compliance by explicitly initalizing char as unsigned
@@ -20,5 +18,5 @@ int main()
 
   int i = 7;
 
-  printf("%d ^ %d = %f", i, exp, pow(i, exp));
+  printf("%d ^ %d = %f\n", i, exp, pow(i, exp));
 }

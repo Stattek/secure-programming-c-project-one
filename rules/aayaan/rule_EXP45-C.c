@@ -5,12 +5,10 @@
  * @version 0.1
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 #include <stdio.h>
 
-int main()
+int main(void)
 {
     int a = 5, b = 10;
 
@@ -20,6 +18,10 @@ int main()
     if (a == b)
     {
         printf("a is equal to b\n");
+    }
+    else
+    {
+        printf("a is not equal to b\n");
     }
 
     return 0;

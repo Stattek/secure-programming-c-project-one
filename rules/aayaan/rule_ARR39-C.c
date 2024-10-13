@@ -5,8 +5,6 @@
  * @version 0.1
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 
 #include <stdio.h>
@@ -16,7 +14,7 @@ enum
     SIZE = 5
 };
 
-int main()
+int main(void)
 {
     int arr[SIZE] = {1, 2, 3, 4, 5};
     int *ptr = arr;
@@ -29,5 +27,6 @@ int main()
         printf("%d ", *ptr);
         ptr++;
     }
+    printf("\n");
     return 0;
 }

@@ -5,8 +5,6 @@
  * @version 0.1
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 #include <stdio.h>
 
@@ -15,9 +13,9 @@
 // used parenthesis for operation order: 16 / (2 * 2 * 2 * 2)
 #define TESSERACTED(X) ((X) * (X) * (X) * (X))
 
-int main()
+int main(void)
 {
-    printf("160 divided by 2 to the fourth is: %d", 16 / TESSERACTED(2));
+    printf("160 divided by 2 to the fourth is: %d\n", 16 / TESSERACTED(2));
 
     return 0;
 }

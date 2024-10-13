@@ -6,30 +6,33 @@
  * @version 0.1
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 #include <pthread.h>
 #include <stdio.h>
 
-struct multi_thread_ints
+struct MultiThreadInts
 {
   unsigned int threadOneInt : 2; // bit-field 1, specify # of bits
   unsigned int threadTwoInt : 2; // bit-field 2, small fields more likely to be adjacent
 };
 
-struct mtf_mutex
+struct MtfMutex
 {
-  struct multi_thread_ints s;
+  struct MultiThreadInts s;
   pthread_mutex_t mutex;
 };
 
-struct mtf_mutex ints;
+struct MtfMutex ints;
 
 // CON32-C: Prevent data races when accessing bit-fields from multiple threads
 // avoided modifying int without MUTEX which could lead to data race if fields are in same storage unit
 // use MUTEX lock to make
 
+/**
+ * @brief Example showing a thread changing a value with a mutex.
+ *
+ * @param arg argument list
+ */
 void *thread1(void *arg)
 {
 
@@ -41,6 +44,11 @@ void *thread1(void *arg)
   return NULL;
 }
 
+/**
+ * @brief Example showing a thread changing a value with a mutex.
+ *
+ * @param arg argument list
+ */
 void *thread2(void *arg)
 {
 
@@ -52,7 +60,7 @@ void *thread2(void *arg)
   return NULL;
 }
 
-int main()
+int main(void)
 {
   pthread_t t1, t2;
 
