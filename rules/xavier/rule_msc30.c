@@ -1,5 +1,5 @@
 /**
- * @file rule_msc_30.c
+ * @file rule_msc30.c
  * @author Xavier Zamora (xzamora@ilstu.edu)
  * @brief MSC30: Do not use the rand() function for generating pseudorandom numbers
  * @version 1.0
