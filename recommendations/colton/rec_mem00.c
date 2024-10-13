@@ -13,7 +13,7 @@
  */
 void printName(const char *name)
 {
-    printf("Name is %s", name);
+    printf("Name is %s\n", name);
 }
 
 int main(void)

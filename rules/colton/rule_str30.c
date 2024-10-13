@@ -14,7 +14,7 @@ int main(void)
     character_name[0] = 'B';
     character_name[1] = 'i';
 
-    printf("New character name is: %s", character_name);
+    printf("New character name is: %s\n", character_name);
 
     return 0;
 }

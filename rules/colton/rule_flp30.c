@@ -14,6 +14,7 @@ int main(void)
     {
         printf("%d \t", int_array[i]);
     }
+    printf("\n");
 
     return 0;
 }
