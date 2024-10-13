@@ -1,7 +1,7 @@
 /**
  * @file rec_arr02.c
  * @author Xavier Zamora (xzamora@iltsu.edu)
- * @brief
+ * @brief ARR02, explicitly specify array bounds, even if implicitly defined by an initializer
  * @version 1.0
  * @date 2024-10-12
  *
