@@ -1,5 +1,5 @@
 /**
- * Author: David Slay,
+ * Author: David Slay, Aayaan, 
  * Summary: Final program for program one
  */
 #include <stdio.h>
@@ -12,7 +12,7 @@
 #include <pthread.h>
 
 #define BUFFER_SIZE 1024
-#define MAX_CHOICE 1 // maximum number of choices
+#define MAX_CHOICE 2 // maximum number of choices
 
 /*
 PRE02-C: Macro replacement lists should be parenthesized
@@ -33,6 +33,12 @@ typedef struct
     size_t bufferSize;
 } ThreadData_ep;
 
+bool doTypingTest(FILE *dstFile, size_t bufSize);
+bool isValidString(char *targetStr, const char *validCharacters);
+void getFileName(char *fileNameStr, int fileNameStrLen);
+void evenPercent(const char *filename);
+void *processFileEp(void *arg);
+void promptUser(void);
 
 /**
  * @brief Does a typing test and prints the user input to a file along with results.
@@ -250,166 +256,7 @@ void getFileName(char *fileNameStr, int fileNameStrLen)
 }
 
 /**
- * @brief Prompts the user and controls flow to the various functions
- * in the program.
- */
-void promptUser(void)
-{
-    printf("Choose an option:\n\t1. Do typing test\n\t2. Calculate even digit percentage from file\n");
-
-    // the valid characters we are reading
-    static const char VALID_CHARACTERS[] = "0123456789";
-
-    char buf[BUFFER_SIZE] = "";
-    long int userInput = 0;
-
-    bool isValidInput = false;
-    do
-    {
-        printf(">> ");
-        if (fgets(buf, BUFFER_SIZE, stdin) == NULL)
-        {
-            fprintf(stderr, "Error reading user input\n");
-            return;
-        }
-        bool isNumStr = isValidString(buf, VALID_CHARACTERS);
-
-        if (isNumStr)
-        {
-            /*
-            Rule STR32: Do not pass a non-null-terminate character sequence to a library function that expects a string.
-
-            This is done by passing a null-terminated string (since fgets always returns a null-terminated string at a max size of bufferSize-1)
-            to the strlen() function, which expects a null-terminated string.
-            */
-            char *lastCharPtr = buf + strlen(buf) - 1; // find the last character of the string
-
-            errno = 0;
-            userInput = strtol(buf, &lastCharPtr, 10);
-            if (errno == EINVAL || errno == ERANGE)
-            {
-                perror("User input value invalid or out of range\n");
-            }
-
-            if (userInput >= 1 && userInput <= MAX_CHOICE)
-            {
-                // this number is valid
-                isValidInput = true;
-            }
-        }
-    } while (!isValidInput);
-
-    switch (userInput)
-    {
-    case 1:
-
-        /*
-        Recommendation STR02: Sanitize data passed to complex subsystems.
-        Done by using function getFileName that validates a user input file name before using it to open a file with fopen().
-        */
-        char fileName[BUFFER_SIZE] = "";
-        getFileName(fileName, BUFFER_SIZE);
-
-        FILE *dstFile = fopen(fileName, "w");
-        if (!dstFile)
-        {
-            fprintf(stderr, "Error opening destination file\n");
-            return;
-        }
-
-        doTypingTest(dstFile, BUFFER_SIZE);
-        break;
-        
-    case 2:
-        char fileName_ep[BUFFER_SIZE] = "";
-        getFileName(fileName_ep, BUFFER_SIZE);
-
-        evenPercent(fileName_ep);  // call to evenPercent to process the file
-        break;
-        
-    default: // impossible
-        fprintf(stderr, "User chose an invalid choice\n");
-        break;
-    
-    }
-}
-
-/**
  * @author Aayaan Shaikh
- * @brief A function evenPercent and a helper processFile_ep to determine the percentage of even numbers in the file to the odd.
- * @version 0.1
- * @date 2024-10-12
- * @brief function to print the percentage of even digits in the file
- */
-/**
- * @author Aayaan Shaikh
- * @brief function that reads the digits from the file and adds them to finalArrayMods in evenPercent
- * @version 0.1
- * @date 2024-10-12
- * @param *arg stream of text from file
- * @return void*
- */
-void *processFile_ep(void *arg)
-{
-    ThreadData_ep *data = (ThreadData_ep *)arg;
-
-    FILE *file = fopen(data->filename, "r");
-    if (!file)
-    {
-        perror("Error: Cannot open file");
-        return NULL;
-    }
-
-    char buffer[data->bufferSize];
-    size_t currentLine = 0;
-
-    // RULE: MEM35-C: Allocate sufficient memory for an object
-    // correctly size max number of chars to sizeof(buffer)
-    while (fgets(buffer, sizeof(buffer), file) != NULL)
-    {
-        if (currentLine >= data->startLine && currentLine < data->endLine)
-        {
-            // check each char in the buffer for digit
-            for (size_t i = 0; buffer[i] != '\0'; i++)
-            {
-                if (isdigit(buffer[i]))
-                {
-
-                    // digit converted into unsigned char then mod by 2 as the even check and then add to array
-
-                    // CON32-C: Prevent data races when accessing bit-fields from multiple threads
-                    // INT07-C: Use only explicitly signed or unsigned char type for numeric values
-                    // use mutex to lock section in case they are adjacent and a part of the same element
-                    // cast to unsigned char to be recommendation compliant
-                    pthread_mutex_lock(data->mutex);
-                    // EXP45-C: Do not perform assignments in selection statements
-                    /*
-                    here instead of placing the assignment in the if statement to check if it is valid we check..
-                    max size to stay in bounds and assign seperately
-                    */
-                    if (*(data->finalArrayModsIndex) < data->maxNumbers)
-                    {
-                        // PRE02-C: Macro replacement lists should be parenthesized
-                        // by using parenthesis we ensure proper order of operations
-                        data->finalArrayMods[*(data->finalArrayModsIndex)] = MOD_ep((unsigned char)(buffer[i] - '0'), 2);
-
-                        (*(data->finalArrayModsIndex))++;
-                    }
-                    pthread_mutex_unlock(data->mutex);
-                }
-            }
-        }
-        currentLine++;
-    }
-
-    fclose(file);
-    return NULL;
-}
-
-/**
- * @author Aayaan Shaikh
- * @version 0.1
- * @date 2024-10-12
  * @brief function to print the percent of even digits in the file
  * @param filename file to be processed
  */
@@ -473,7 +320,7 @@ void evenPercent(const char *filename)
         ThreadData_ep[i].mutex = &mutex;
         ThreadData_ep[i].maxNumbers = MAX_NUMBERS_ep;
         ThreadData_ep[i].bufferSize = BUFFER_SIZE_ep;
-        pthread_create(&threads[i], NULL, processFile_ep, &ThreadData_ep[i]);
+        pthread_create(&threads[i], NULL, processFileEp, &ThreadData_ep[i]);
     }
 
     for (int i = 0; i < 4; i++)
@@ -503,9 +350,155 @@ void evenPercent(const char *filename)
     percentEven = ((float)evenCount / finalArrayModsIndex) * 100;
     // FIO47-C: Use valid format strings
     // use $.2f to round to the hundreths and use a float
-    printf("The percentage of even numbers is %.2f%%\n", percentEven);
+    printf("The percentage of even digits in the file is %.2f%%\n", percentEven);
 }
 
+/**
+ * @author Aayaan Shaikh
+ * @brief function that reads the digits from the file and adds them to finalArrayMods in evenPercent
+ * @param *arg stream of text from file
+ * @return void*
+ */
+void *processFileEp(void *arg)
+{
+    ThreadData_ep *data = (ThreadData_ep *)arg;
+
+    FILE *file = fopen(data->filename, "r");
+    if (!file)
+    {
+        perror("Error: Cannot open file");
+        return NULL;
+    }
+
+    char buffer[data->bufferSize];
+    size_t currentLine = 0;
+
+    // RULE: MEM35-C: Allocate sufficient memory for an object
+    // correctly size max number of chars to sizeof(buffer)
+    while (fgets(buffer, sizeof(buffer), file) != NULL)
+    {
+        if (currentLine >= data->startLine && currentLine < data->endLine)
+        {
+            // check each char in the buffer for digit
+            for (size_t i = 0; buffer[i] != '\0'; i++)
+            {
+                if (isdigit(buffer[i]))
+                {
+
+                    // digit converted into unsigned char then mod by 2 as the even check and then add to array
+
+                    // CON32-C: Prevent data races when accessing bit-fields from multiple threads
+                    // INT07-C: Use only explicitly signed or unsigned char type for numeric values
+                    // use mutex to lock section in case they are adjacent and a part of the same element
+                    // cast to unsigned char to be recommendation compliant
+                    pthread_mutex_lock(data->mutex);
+                    // EXP45-C: Do not perform assignments in selection statements
+                    /*
+                    here instead of placing the assignment in the if statement to check if it is valid we check..
+                    max size to stay in bounds and assign seperately
+                    */
+                    if (*(data->finalArrayModsIndex) < data->maxNumbers)
+                    {
+                        // PRE02-C: Macro replacement lists should be parenthesized
+                        // by using parenthesis we ensure proper order of operations
+                        data->finalArrayMods[*(data->finalArrayModsIndex)] = MOD_ep((unsigned char)(buffer[i] - '0'), 2);
+
+                        (*(data->finalArrayModsIndex))++;
+                    }
+                    pthread_mutex_unlock(data->mutex);
+                }
+            }
+        }
+        currentLine++;
+    }
+
+    fclose(file);
+    return NULL;
+}
+
+/**
+ * @brief Prompts the user and controls flow to the various functions
+ * in the program.
+ */
+void promptUser(void)
+{
+    printf("Choose an option:\n\t1. Do typing test\n\t2. Read and calculate percentage of even digits from file\n");
+
+    // the valid characters we are reading
+    static const char VALID_CHARACTERS[] = "0123456789";
+
+    char buf[BUFFER_SIZE] = "";
+    long int userInput = 0;
+
+    bool isValidInput = false;
+    do
+    {
+        printf(">> ");
+        if (fgets(buf, BUFFER_SIZE, stdin) == NULL)
+        {
+            fprintf(stderr, "Error reading user input\n");
+            return;
+        }
+        bool isNumStr = isValidString(buf, VALID_CHARACTERS);
+
+        if (isNumStr)
+        {
+            /*
+            Rule STR32: Do not pass a non-null-terminate character sequence to a library function that expects a string.
+
+            This is done by passing a null-terminated string (since fgets always returns a null-terminated string at a max size of bufferSize-1)
+            to the strlen() function, which expects a null-terminated string.
+            */
+            char *lastCharPtr = buf + strlen(buf) - 1; // find the last character of the string
+
+            errno = 0;
+            userInput = strtol(buf, &lastCharPtr, 10);
+            if (errno == EINVAL || errno == ERANGE)
+            {
+                perror("User input value invalid or out of range\n");
+            }
+
+            if (userInput >= 1 && userInput <= MAX_CHOICE)
+            {
+                // this number is valid
+                isValidInput = true;
+            }
+        }
+    } while (!isValidInput);
+
+    switch (userInput)
+    {
+    case 1:
+
+        /*
+        Recommendation STR02: Sanitize data passed to complex subsystems.
+        Done by using function getFileName that validates a user input file name before using it to open a file with fopen().
+        */
+        char fileName[BUFFER_SIZE] = "";
+        getFileName(fileName, BUFFER_SIZE);
+
+        FILE *dstFile = fopen(fileName, "w");
+        if (!dstFile)
+        {
+            fprintf(stderr, "Error opening destination file\n");
+            return;
+        }
+
+        doTypingTest(dstFile, BUFFER_SIZE);
+        break;
+
+    case 2:
+        char fileName_ep[BUFFER_SIZE] = "";
+        getFileName(fileName_ep, BUFFER_SIZE);
+
+        evenPercent(fileName_ep); // call to evenPercent to process the file
+        break;
+
+    default: // impossible
+        fprintf(stderr, "User chose an invalid choice\n");
+        break;
+    }
+}
 
 int main(void)
 {
