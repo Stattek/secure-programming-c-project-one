@@ -1,8 +1,8 @@
 /**
  * @file rule_int32.c
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
+ * @author Xavier Zamora (xzamora@ilstu.edu)
+ * @brief INT32: ensure that operations on signed integers do not result in overflow
+ * @version 1.0
  * @date 2024-10-12
  * 
  * @copyright Copyright (c) 2024

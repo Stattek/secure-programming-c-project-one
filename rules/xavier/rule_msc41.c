@@ -1,7 +1,12 @@
 /**
-    Author: Xavier Zamora
-    Sumary: Rule MSC41-C working code, never hard code sensitive information
-    https://wiki.sei.cmu.edu/confluence/display/c/MSC41-C.+Never+hard+code+sensitive+information
+ * @file rule_msc41.c
+ * @author Xavier Zamora (xzamora@ilstu.edu)
+ * @brief MSC41: never hard code sensitive information
+ * @version 1.0
+ * @date 2024-10-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
  */
 
 #include <stdio.h>

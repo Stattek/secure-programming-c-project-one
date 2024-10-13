@@ -1,7 +1,12 @@
 /**
-    Author: Xavier Zamora
-    Sumary: ARR32-C, ensure size arguments for variable length arrays are in a valid range
-    https://wiki.sei.cmu.edu/confluence/display/c/ARR32-C.+Ensure+size+arguments+for+variable+length+arrays+are+in+a+valid+range
+ * @file rule_arr32.c
+ * @author Xavier Zamora (xzamora@ilstu.edu)
+ * @brief ARR32: ensure size arguments for variable length arrays are in a valid range
+ * @version 1.0
+ * @date 2024-10-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
  */
 
 #include <stdio.h>

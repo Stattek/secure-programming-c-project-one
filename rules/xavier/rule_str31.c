@@ -1,7 +1,12 @@
 /**
-    Author: Xavier Zamora
-    Sumary: Rule STR31-C working code, ensure storage for strings has sufficient space for character data
-    https://wiki.sei.cmu.edu/confluence/display/c/STR31-C.+Guarantee+that+storage+for+strings+has+sufficient+space+for+character+data+and+the+null+terminator
+ * @file rule_str31.c
+ * @author Xavier Zamora (xzamora@ilstu.edu)
+ * @brief STR31: ensure storage for strings has sufficient space for character data
+ * @version 1.0
+ * @date 2024-10-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
  */
 
 #include <stdio.h>

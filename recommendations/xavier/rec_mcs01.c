@@ -12,6 +12,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief not checking what happens when num1 and num3 are equal
+ * 
+ * @param num1 first int input
+ * @param num2 second int input
+ * @param num3 third int input
+ */
 void wrongFunction(int num1, int num2, int num3)
 {
     if (num1 == num2)
@@ -22,10 +29,16 @@ void wrongFunction(int num1, int num2, int num3)
     {
         printf("num2 and num3 equal");
     }
-    // we're not checking for what to do if num1 and num3 are equal
     printf("No numbers are equal\n");
 }
 
+/**
+ * @brief comparing all numbers, fully satisfying logic
+ * 
+ * @param num1 first int input
+ * @param num2 second int input
+ * @param num3 third int input
+ */
 void rightFunction(int num1, int num2, int num3)
 {
     if (num1 == num2)

@@ -1,8 +1,13 @@
 /**
- * Author: Xavier Zamora
- * Summary: Rule MEM30-C working code, don't access freed memory
-    https://wiki.sei.cmu.edu/confluence/display/c/MEM30-C.+Do+not+access+freed+memory
-*/
+ * @file rule_mem30.c
+ * @author Xavier Zamora (xzamora@ilstu.edu)
+ * @brief MEM30: don't access freed memory
+ * @version 0.1
+ * @date 2024-10-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

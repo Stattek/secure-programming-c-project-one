@@ -17,8 +17,9 @@ int main()
     char message1[] = "hi :D";
 
     // explicitly defined size of 6
-    char message2[] = "hi :)";
+    char message2[6] = "hi :)";
 
+    // printing both messages out
     printf("%s\n", message1);
     printf("%s\n", message2);
 

@@ -18,8 +18,8 @@ int main()
     int resultWrong = SQUAREWRONG(a + 1);
     int resultRight = SQUARERIGHT(a + 1);
 
-    printf("Wrong result: %d\n", resultWrong);
-    printf("Right result: %d\n", resultRight);
+    printf("Wrong result: %d\n", resultWrong); // unintended output
+    printf("Right result: %d\n", resultRight); // intended output
 
     return 0;
 }

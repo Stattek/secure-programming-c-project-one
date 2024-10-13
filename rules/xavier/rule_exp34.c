@@ -1,7 +1,12 @@
 /**
-    Author: Xavier Zamora
-    Sumary: Rule EXP34-C working code, do not dereference null pointers (lol)
-    https://wiki.sei.cmu.edu/confluence/display/c/EXP34-C.+Do+not+dereference+null+pointers
+ * @file rule_exp34.c
+ * @author Xavier Zamora (xzamora@ilstu.edu)
+ * @brief EXP34: do not dereference null pointers
+ * @version 1.0
+ * @date 2024-10-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
  */
 
 #include <stdio.h>

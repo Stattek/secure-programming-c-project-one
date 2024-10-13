@@ -14,9 +14,9 @@
 /**
  * @brief 
  * 
- * @param filename 
- * @param mode 
- * @return FILE* 
+ * @param filename name of file to open
+ * @param mode read, write, etc
+ * @return FILE* return ptr to file
  */
 FILE* openFile(const char *filename, const char *mode)
 {

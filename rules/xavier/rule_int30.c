@@ -1,7 +1,7 @@
 /**
  * @file rule_int30.c
- * @author your name (you@domain.com)
- * @brief 
+ * @author Xavier Zamora (xzamora@ilstu.edu)
+ * @brief INT30: ensure that unsigned int operations do not wrap
  * @version 0.1
  * @date 2024-10-12
  * 
