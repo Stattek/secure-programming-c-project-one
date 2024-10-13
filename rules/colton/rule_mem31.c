@@ -19,7 +19,8 @@ int main(void)
 
     product = int_pointer[0] * int_pointer[1] * int_pointer[2] * int_pointer[3] * int_pointer[4];
 
-    printf("Product is: %d", product);
+    printf("Product is: %d\n", product);
+    
     // frees array memory
     free(int_pointer);
     return 0;

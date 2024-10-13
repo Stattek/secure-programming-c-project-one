@@ -23,6 +23,6 @@ int main(void)
         scanf("%d", &divisor);
     }
     double result = (double)dividend / (double)divisor;
-    printf("The result is: %.3f", result);
+    printf("The result is: %.3f\n", result);
     return 0;
 }

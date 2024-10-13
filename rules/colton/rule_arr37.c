@@ -20,7 +20,7 @@ int main(void)
         total += my_toyotas.models[i];
     }
     double average_age = (double)total / 4;
-    printf("Average age of car: %.1f", average_age);
+    printf("Average age of car: %.1f\n", average_age);
 
     return 0;
 }

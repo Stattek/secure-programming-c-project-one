@@ -14,6 +14,6 @@ int main(void)
     {
         sum += (unsigned char)string[i];
     }
-    printf("Sum of characters: %d", sum);
+    printf("Sum of characters: %d\n", sum);
     return 0;
 }
