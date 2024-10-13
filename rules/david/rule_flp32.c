@@ -22,7 +22,7 @@ bool safe_acos(double num, double *resultOut)
     */
     if (!resultOut || !isgreaterequal(num, -1.0) || !islessequal(num, 1.0))
     {
-        // outside of desired range of (-1 <= x <= 1) or resultOut is NULL
+        // outside of desired domain of (-1 <= x <= 1) or resultOut is NULL
         return true;
     }
 

@@ -9,9 +9,10 @@ int main(void)
 {
     /*
     Recommendation INT17-C: Define integer constants in an implementation-independent manner
-    Create mask with all bits set to 1 by setting to -1, which will set all bits to 1 on different implementations.
+    Create mask with all bits set to 1 by setting to the maximum value that can be held in an unsigned int in a
+    portable way using limits.
     */
-    const unsigned int MASK = -1;
+    const unsigned int MASK = UINT_MAX;
     printf("The mask: %u\n", MASK);
 
     // bitshift 2 to the right to have all bits except the first two set to 1
