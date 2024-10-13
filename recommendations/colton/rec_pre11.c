@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-#define power_of_two(power) {sum = 1; for(i = 1; i < power; i++) {sum = sum*2;}}
+#define power_of_two(power) {sum = 1; for(i = 0; i < power; i++) {sum = sum*2;}}
 
 int i;
 int sum;
