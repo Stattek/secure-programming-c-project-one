@@ -15,7 +15,7 @@ int main(void)
     number_holder += 1;
     number_holder = number_holder * 2;
 
-    printf("Number after operations: %d", number_holder);
+    printf("Number after operations: %d\n", number_holder);
 
     return 0;
 }

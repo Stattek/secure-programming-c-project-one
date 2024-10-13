@@ -1,6 +1,6 @@
 /**
  * Author: David Slay
- * Summary: Rule STR02-C example working code
+ * Summary: Recommendation STR02-C and rule STR38-c example working code
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,10 +10,22 @@
 
 #define DIRECTORY_STRING_LENGTH 1024
 
+/**
+ * @brief Checks that a string is valid and only contains characters in the
+ * specified character string.
+ *
+ * @param targetStr The string to validate.
+ * @param validCharacters The valid characters.
+ */
 bool isValidString(char *targetStr, const char *validCharacters)
 {
     bool isValid = false;
 
+    /*
+    Rule STR38-C: Do not confuse narrow and wide character strings and functions
+    This code does not confuse wide character string functions with narrow character string functions,
+    as this uses the strlen() function for narrow strings on a narrow string.
+    */
     char *lastCharPtr = targetStr + strlen(targetStr) - 1; // find the last character of the string
     if (lastCharPtr && *lastCharPtr == '\n')
     {
@@ -39,6 +51,10 @@ int main(void)
     memset(directoryStr, 0, DIRECTORY_STRING_LENGTH);
     char *readStrPtr;
 
+    /*
+    Recommendation STR02-C: Sanitize data passed to complex subsystems
+    This is an example of this recommendation, as the following loop ensures that the string read from the user
+    is sanitized for use with more a more complicated subsystem, as it will be used by ls.*/
     bool nameIsSanitized = false;
     do
     {

@@ -1,6 +1,6 @@
 /**
  * Author: David Slay
- * Summary: Rule ARR36-C example working code
+ * Summary: Rule ARR36-C and rule EXP46-C example working code
  */
 #include <stdio.h>
 #include <stdbool.h>
@@ -11,13 +11,22 @@ int main(void)
 {
     int arr[MY_ARR_SIZE];
     int *curArrPtr = arr;
-    // subtract pointers that point to the same array
+    /*
+    Rule ARR36-C: Do not subtract or compare two pointers that do not refer to the same array
+    Done by subtracting pointers that point to the same array, as we subtract a pointer at one element past the array
+    from a pointer at the beginning of the array.
+     */
     int freeElements = (&(arr[MY_ARR_SIZE]) - curArrPtr);
 
     printf("Input number to add to the array: ");
 
     int inputNum = 0;
     int readErr = scanf("%d", &inputNum);
+
+    /*
+    Rule EXP46-C: Do not use a bitwise operator with a Boolean-like operand
+    This code uses the && operator rather than using the bitwise & operator to do boolean logic.
+    */
     while (readErr > 0 && freeElements > 0)
     {
         *curArrPtr = inputNum;

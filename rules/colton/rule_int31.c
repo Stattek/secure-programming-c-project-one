@@ -18,7 +18,7 @@ int main(void)
     }
     // convert to an unsigned int
     size_t absolute_value = (size_t)number_entered;
-    printf("Absolute Number: %d", absolute_value);
+    printf("Absolute Number: %zd\n", absolute_value);
 
     return 0;
 }

@@ -1,6 +1,8 @@
 /**
  * Author: Waleed
- * Summary: ere, the addition of `a` and `b` is performed using `unsigned long long` to prevent overflow. The program checks if the result exceeds the maximum value of `unsigned int` before safely casting it back, ensuring accurate computation and preventing data loss.
+ * Summary: Here, the addition of `a` and `b` is performed using `unsigned long long` to prevent overflow. 
+ * The program checks if the result exceeds the maximum value of `unsigned int` before safely casting it back, 
+ * ensuring accurate computation and preventing data loss.
  */
 #include <stdio.h>
 #include <limits.h>
