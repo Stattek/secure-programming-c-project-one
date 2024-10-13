@@ -1,6 +1,6 @@
 /**
  * Author: Colton Longstreth
- * Summary: Rule INT18-C example working code
+ * Summary: Rule FLP06-C example working code
  */
 
 #include <stdio.h>
