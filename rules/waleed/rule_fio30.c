@@ -3,6 +3,7 @@
  * Summary: Here, the program uses a fixed format string in `printf`, preventing any unintended behavior from user input.
  */
 #include <stdio.h>
+#include <string.h>
 
 int main(void)
 {

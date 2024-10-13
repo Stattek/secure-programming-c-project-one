@@ -37,6 +37,10 @@ void exit3(void)
 
 int main(void)
 {
+    /*
+    Rule ENV32-C: All exit handlers must return normally
+    Registers functions to run at exit with atexit(), which all return normally and do not call exit functions.
+    */
     // functions registered with atexit() should be called in reverse-order when the program exits
     if (atexit(exit1) || atexit(exit2) || atexit(exit3))
     {

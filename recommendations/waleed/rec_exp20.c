@@ -1,12 +1,16 @@
 /**
  * Author: Waleed
- * Summary: In this example, the code explicitly compares integers to `0`, 
- * booleans to `true` or `false`, and pointers to `NULL`. 
- * This practice avoids ambiguity and potential bugs arising from implicit type conversions or 
+ * Summary: In this example, the code explicitly compares integers to `0`,
+ * booleans to `true` or `false`, and pointers to `NULL`.
+ * This practice avoids ambiguity and potential bugs arising from implicit type conversions or
  * misunderstandings about how certain values evaluate in conditional contexts.
  */
 #include <stdio.h>
 #include <stdbool.h>
+
+int get_status(void);
+bool check_condition(void);
+char *get_data(void);
 
 int main(void)
 {
@@ -47,17 +51,31 @@ int main(void)
     return 0;
 }
 
-// Dummy function implementations for illustration
+/**
+ * @brief Get the status object
+ *
+ * @return int
+ */
 int get_status(void)
 {
     return 0; // Simulate success
 }
 
+/**
+ * @brief Check if a condition is met
+ *
+ * @return bool
+ */
 bool check_condition(void)
 {
     return false; // Simulate condition not met
 }
 
+/**
+ * @brief Get the data object
+ *
+ * @return char*
+ */
 char *get_data(void)
 {
     return NULL; // Simulate no data

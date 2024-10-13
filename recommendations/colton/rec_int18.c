@@ -13,7 +13,7 @@ int main(void)
     // comparing the 2 numbers
     if ((long long)small_number + small_number < larger_number)
     {
-        printf("Small number times 2 is less than the large number.");
+        printf("Small number times 2 is less than the large number.\n");
     }
 
     return 0;

@@ -10,7 +10,7 @@
  */
 void printStatement(void)
 {
-    printf("Statement inside function");
+    printf("Statement inside function\n");
 };
 
 int main(void)

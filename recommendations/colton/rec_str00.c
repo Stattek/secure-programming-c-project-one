@@ -30,6 +30,10 @@ int main(void)
     {
         printf("%c", character);
     }
+
+    // print an extra newline
+    printf("\n");
+    
     // closes the file
     fclose(file_pointer);
     return 0;
