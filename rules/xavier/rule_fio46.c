@@ -30,27 +30,42 @@ FILE* openFile(const char *filename, const char *mode)
     return file;
 }
 
+/**
+ * @brief read from a file and print its contents.
+ * 
+ * @param file pointer to the file to read
+ */
+void readFile(FILE *file)
+{
+    char buffer[16];
+
+    while (fgets(buffer, sizeof(buffer), file) != NULL)
+    {
+        printf("%s", buffer);
+    }
+
+    if (ferror(file))
+    {
+        perror("Error reading from file");
+    }
+}
+
 int main()
 {
-    FILE *file = openFile("fio46_text.txt", "r");
+    FILE *file = openFile("fio46__msc41_text.txt", "r");
 
     if (file == NULL)
     {
         return 1;
     }
 
-    char buffer[16];
+    readFile(file);
 
-    if (fgets(buffer, sizeof(buffer), file) != NULL)
+    if (fclose(file) != 0)
     {
-        printf("read: %s\n", buffer);
+        perror("failed to close file");
+        return 1;
     }
-    else
-    {
-        perror("error reading from file");
-    }
-
-    fclose(file);
     
     return 0;
 }
