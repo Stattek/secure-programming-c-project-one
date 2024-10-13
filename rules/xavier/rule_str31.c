@@ -4,15 +4,12 @@
  * @brief STR31: ensure storage for strings has sufficient space for character data
  * @version 1.0
  * @date 2024-10-13
- * 
- * @copyright Copyright (c) 2024
- * 
+ *
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
+int main(void)
 {
     // c doesnt have strings built in so we need array of characters
     char hello[] = "hello world";
@@ -20,7 +17,7 @@ int main()
 
     // attempting to copy one string to another that does not hold enough space
     char failure[5];
-    
+
     int i;
     for (i = 0; i <= 11; i++)
     {

@@ -4,18 +4,15 @@
  * @brief MSC41: never hard code sensitive information
  * @version 1.0
  * @date 2024-10-13
- * 
- * @copyright Copyright (c) 2024
- * 
+ *
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 /**
  * @brief reads the password from a file and stores it in buffer
- * 
+ *
  * @param filename name of password file
  * @param password buffer to store password
  * @param size size of password buffer
@@ -45,11 +42,12 @@ int readPasswordFromFile(const char *filename, char *password, size_t size)
 
 /**
  * @brief prompts user to input a password attempt
- * 
+ *
  * @param passwordAttempt buffer to store user input
  * @param size size of password attempt buffer
  */
-void getPasswordAttempt(char *passwordAttempt, size_t size) {
+void getPasswordAttempt(char *passwordAttempt, size_t size)
+{
     printf("password attempt:\n");
     fgets(passwordAttempt, size, stdin);
     // removing newline character
@@ -58,39 +56,41 @@ void getPasswordAttempt(char *passwordAttempt, size_t size) {
 
 /**
  * @brief compares password attempt with actual password
- * 
+ *
  * @param password correct password
  * @param passwordAttempt password attempt
  * @return 0 if match, 1 if not mach
  */
-int comparePasswords(const char *password, const char *passwordAttempt) {
+int comparePasswords(const char *password, const char *passwordAttempt)
+{
     int result = strcmp(passwordAttempt, password);
 
     // ensuring that password is not stored
-    memset((void*)passwordAttempt, 0, strlen(passwordAttempt));
+    memset((void *)passwordAttempt, 0, strlen(passwordAttempt));
 
     return result;
 }
 
-int main()
+int main(void)
 {
     char password[100];
-    
-    if (readPasswordFromFile("password.txt", password, sizeof(password)) != 0) {
+
+    if (readPasswordFromFile("password.txt", password, sizeof(password)) != 0)
+    {
         return 1;
     }
-    
+
     char passwordAttempt[strlen(password) + 1];
     getPasswordAttempt(passwordAttempt, sizeof(passwordAttempt));
 
     if (comparePasswords(password, passwordAttempt) == 0)
     {
-        printf("correct password yippee");
+        printf("correct password yippee\n");
         return 0;
     }
     else
     {
-        printf("wrong password go away");
+        printf("wrong password go away\n");
         return 1;
     }
 }

@@ -4,17 +4,15 @@
  * @brief ARR32: ensure size arguments for variable length arrays are in a valid range
  * @version 1.0
  * @date 2024-10-13
- * 
- * @copyright Copyright (c) 2024
- * 
+ *
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 1000  // defining maximum size for array
+#define MAX_SIZE 1000 // defining maximum size for array
 
-int main() {
+int main(void)
+{
     int size;
 
     printf("Enter the size of the array (max %d): ", MAX_SIZE);
@@ -39,7 +37,7 @@ int main() {
     {
         printf("%d ", array[i]);
     }
-    
+
     printf("\n");
 
     return 0;

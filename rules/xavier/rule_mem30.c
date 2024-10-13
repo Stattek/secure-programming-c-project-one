@@ -4,24 +4,21 @@
  * @brief MEM30: don't access freed memory
  * @version 0.1
  * @date 2024-10-13
- * 
- * @copyright Copyright (c) 2024
- * 
+ *
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
+int main(void)
 {
     int *ptr = (int *)malloc(sizeof(int));
     int *ptr_two = (int *)malloc(sizeof(int));
 
     if (ptr == NULL || ptr_two == NULL)
     {
-        printf("Memory allocation failed");
+        printf("Memory allocation failed\n");
         return 1;
-    }  
+    }
 
     // give a value to ptr and access it
     // all good
@@ -45,11 +42,11 @@ int main()
 
     if (ptr_two == NULL)
     {
-        printf("ptr_two has been freed and set to NULL");
+        printf("ptr_two has been freed and set to NULL\n");
     }
     else
     {
-        printf("ptr_two has NOT been freed and set to NULL properly");
+        printf("ptr_two has NOT been freed and set to NULL properly\n");
     }
 
     return 0;

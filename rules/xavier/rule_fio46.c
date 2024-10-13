@@ -4,26 +4,23 @@
  * @brief FIO46: Do not access a closed file
  * @version 1.0
  * @date 2024-10-12
- * 
- * @copyright Copyright (c) 2024
- * 
+ *
  */
-
 #include <stdio.h>
 
 /**
- * @brief 
- * 
+ * @brief Opens a file and returns it if opened properly.
+ *
  * @param filename name of file to open
  * @param mode read, write, etc
- * @return FILE* return ptr to file
+ * @return Pointer to a file or NULL if there was an error opening it.
  */
-FILE* openFile(const char *filename, const char *mode)
+FILE *openFile(const char *filename, const char *mode)
 {
     FILE *file = fopen(filename, mode);
     if (file == NULL)
     {
-        perror("failed to open file");
+        perror("failed to open file\n");
         return NULL;
     }
 
@@ -32,7 +29,7 @@ FILE* openFile(const char *filename, const char *mode)
 
 /**
  * @brief read from a file and print its contents.
- * 
+ *
  * @param file pointer to the file to read
  */
 void readFile(FILE *file)
@@ -43,16 +40,18 @@ void readFile(FILE *file)
     {
         printf("%s", buffer);
     }
+    // print extra newline
+    printf("\n");
 
     if (ferror(file))
     {
-        perror("Error reading from file");
+        perror("Error reading from file\n");
     }
 }
 
-int main()
+int main(void)
 {
-    FILE *file = openFile("fio46__msc41_text.txt", "r");
+    FILE *file = openFile("fio46_msc41_text.txt", "r");
 
     if (file == NULL)
     {
@@ -63,9 +62,9 @@ int main()
 
     if (fclose(file) != 0)
     {
-        perror("failed to close file");
+        perror("failed to close file\n");
         return 1;
     }
-    
+
     return 0;
 }

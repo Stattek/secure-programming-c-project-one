@@ -4,9 +4,7 @@
  * @brief INT32: ensure that operations on signed integers do not result in overflow
  * @version 1.0
  * @date 2024-10-12
- * 
- * @copyright Copyright (c) 2024
- * 
+ *
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +13,7 @@
 
 /**
  * @brief Compares two ints and determines if they are too big to perform multiplication on
- * 
+ *
  * @param a first int to compare
  * @param b second int to compare
  */
@@ -33,7 +31,7 @@ void tooMuch(int a, int b)
     }
 }
 
-int main()
+int main(void)
 {
     srand(time(0));
 

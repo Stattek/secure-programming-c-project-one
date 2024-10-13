@@ -4,15 +4,16 @@
  * @brief PRE01: Use parentheses within macros around parameter names
  * @version 1.0
  * @date 2024-10-12
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
+#include <stdio.h>
 
 #define SQUAREWRONG(X) (X * X)
 #define SQUARERIGHT(X) ((X) * (X))
 
-int main()
+int main(void)
 {
     int a = 7;
     int resultWrong = SQUAREWRONG(a + 1);
