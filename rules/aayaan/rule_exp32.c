@@ -1,5 +1,5 @@
 /**
- * @file EXP32-C.c
+ * @file rule_exp32.c
  * @author Aayaan Shaikh
  * @brief demonstrates volitile type elements
  * @version 0.1

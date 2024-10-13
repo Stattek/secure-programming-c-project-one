@@ -1,5 +1,5 @@
 /**
- * @file MEM35-C.c
+ * @file rule_mem35.c
  * @author Aayaan Shaikh
  * @brief demonstrates allocating sufficent memory for object
  * @version 0.1

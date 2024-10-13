@@ -1,5 +1,5 @@
 /**
- * @file DCL30-C.c
+ * @file rule_dcl30.c
  * @author Aayaan Shaikh
  * @brief demonstrates setting correct storage duration
  * @version 0.1

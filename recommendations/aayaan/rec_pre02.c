@@ -1,5 +1,5 @@
 /**
- * @file PRE02-C.c
+ * @file rec_pre02.c
  * @author Aayaan Shaikh
  * @brief demonstrates using parenthesis for proper order of operations in macro expansion
  * @version 0.1

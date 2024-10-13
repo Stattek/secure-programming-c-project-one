@@ -1,5 +1,5 @@
 /**
- * @file DCL23-C.c
+ * @file rec_dcl23.c
  * @author Aayaan Shaikh
  * @brief demonstrates unique identifiers for extern variables abstracted for many implementations
  * @version 0.1
@@ -20,7 +20,6 @@ extern int *unique_blood_type_b_positive_state_variable_identifier;
 
 int main(void)
 {
-
     int *unique_blood_type_a_positive_state_variable_identifier = &blood_type_a_positive_variable;
     int *unique_blood_type_b_positive_state_variable_identifier = &blood_type_b_positive_variable;
 

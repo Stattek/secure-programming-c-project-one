@@ -1,5 +1,5 @@
 /**
- * @file EXP45-C.c
+ * @file rule_exp45.c
  * @author Aayaan Shaikh
  * @brief demonstrates proper comparison in selection statement
  * @version 0.1

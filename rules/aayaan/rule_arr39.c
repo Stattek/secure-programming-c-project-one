@@ -1,5 +1,5 @@
 /**
- * @file ARR39-C.c
+ * @file rule_arr39.c
  * @author Aayaan Shaikh
  * @brief demonstrates printing array using pointer to iterate
  * @version 0.1
