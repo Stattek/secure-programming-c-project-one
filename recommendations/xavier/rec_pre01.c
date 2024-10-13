@@ -5,8 +5,6 @@
  * @version 1.0
  * @date 2024-10-12
  *
- * @copyright Copyright (c) 2024
- *
  */
 #include <stdio.h>
 
