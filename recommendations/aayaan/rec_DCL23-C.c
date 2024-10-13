@@ -11,11 +11,25 @@
 
 #include <stdio.h>
 
-int main()
-{
-  // DCL23-C: Guarantee that mutually visible identifiers are unique
-  // avoided non-compliance by not having unique portion of identifier in back of id
-  // compliance by having unique portion of identifier in front of id;
-  extern int *a_test_world_map_id_region_state_000010100101011010;
-  extern int *b_test_world_map_id_region_state_000010100101011010;
+int blood_type_a_positive_variable = 1;
+int blood_type_b_positive_variable = 2;
+
+// DCL23-C: Guarantee that mutually visible identifiers are unique
+// avoided non-compliance by not having unique portion of identifier in back of id
+// compliance by having unique portion of identifier in first 31 charcters of id
+extern int *unique_blood_type_a_positive_state_variable_identifier;
+extern int *unique_blood_type_b_positive_state_variable_identifier;
+
+int main() {
+    
+    int *unique_blood_type_a_positive_state_variable_identifier = &blood_type_a_positive_variable;
+int *unique_blood_type_b_positive_state_variable_identifier = &blood_type_b_positive_variable;
+
+   
+    printf("Value from unique_blood_type_a_positive_state_variable_identifier: %d\n", 
+           *unique_blood_type_a_positive_state_variable_identifier);
+    printf("Value from unique_blood_type_b_positive_state_variable_identifier: %d\n", 
+           *unique_blood_type_b_positive_state_variable_identifier);
+
+    return 0;
 }
