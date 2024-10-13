@@ -12,14 +12,45 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void allocate_int_arr(size_t len)
-{
-  int *arr;
+void allocate_int_arr(size_t len) {
+    int *arr;
 
-  // MEM35-C: Allocate sufficient memory for an object
-  // avoided allocating wrong size: sizeof(float)
-  // compare with arr + SIZE instead to loop for each element
-  arr = (int *)malloc(len * sizeof(int));
+    // MEM35-C: Allocate sufficient memory for an object
+    // avoided allocating wrong size: sizeof(float)
+    // compare with arr + SIZE instead to loop for each element
+    arr = (int *)malloc(len * sizeof(int));
+    
+    //check for success
+    if (arr == NULL) {
+        perror("Error: failed to allocate memory");
+        return;
+    }
 
-  free(arr);
+    // fill array
+    for (size_t i = 0; i < len; i++) 
+    {
+        arr[i] = (int)i; 
+    }
+
+
+    for (size_t i = 0; i < len; i++) 
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+
+    free(arr);
+}
+
+int main() {
+    
+    size_t len;
+
+    printf("Enter the length of the array: ");
+    scanf("%zu", &len);
+
+    allocate_int_arr(len);
+
+    return 0;
 }
