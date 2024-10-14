@@ -1,5 +1,5 @@
 /**
- * @file rec_exp15.c
+ * @file rec_msc01.c
  * @author Xavier Zamora (xzamora@ilstu.edu)
  * @brief MSC01: Strive for logical completeness
  * @version 1.0
