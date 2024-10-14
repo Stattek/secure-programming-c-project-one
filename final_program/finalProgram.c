@@ -680,7 +680,7 @@ int processData(const char *filename)
         if (buffer[0] != '\0')
         {
             // FIO30-C: Exclude user input from format strings
-            printf("Data read: %s\n", buffer);
+            printf("First line read: %s\n", buffer);
         }
         else
         {
