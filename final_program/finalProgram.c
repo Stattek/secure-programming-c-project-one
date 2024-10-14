@@ -1,5 +1,5 @@
 /**
- * Author: David Slay, Aayaan, Xavier Zamora, Colton Longstreth
+ * Author: David Slay, Aayaan, Xavier Zamora, Colton Longstreth, and Waleed Chatta
  * Summary: Final program for program one
  */
 #include <stdio.h>
@@ -14,7 +14,7 @@
 #include <stdint.h>
 
 #define BUFFER_SIZE 1024
-#define MAX_CHOICE 4 // maximum number of choices
+#define MAX_CHOICE 5 // maximum number of choices
 
 /*
 PRE02-C: Macro replacement lists should be parenthesized
@@ -52,6 +52,7 @@ double subtractionCalculator(double currentValue);
 double additionCalculator(double currentValue);
 double multiplicationCalculator(double currentValue);
 double divisionCalculator(double currentValue);
+int processData(const char *filename);
 
 /**
  * @author Xavier Zamora
@@ -638,13 +639,132 @@ void *processFileEp(void *arg)
 }
 
 /**
+ * @author Waleed Chatta
+ * @brief Processes data from a given file as well a this function opens the specified file,
+ * reads data, and performs several operations
+ *
+ * @param filename The name of the file to process.
+ * @return 0 on success, or a negative error code on failure.
+ */
+int processData(const char *filename)
+{
+    // MSC37-C: Ensure that control never reaches the end of a non-void function
+
+    // FIO01-C: Be careful using functions that use file names for identification
+    // Validate filename
+    if (filename == NULL || strstr(filename, "..") != NULL || filename[0] == '/')
+    {
+        fprintf(stderr, "Invalid filename.\n");
+        return -1;
+    }
+
+    // ERR33-C: Detect and handle standard library errors
+    FILE *file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        perror("Error opening file");
+        return -1;
+    }
+
+    // ARR01-C: Do not apply sizeof to a pointer when taking the size of an array
+    char buffer[100];
+    size_t bufferSize = sizeof(buffer);
+
+    // FIO37-C: Do not assume that fgets() returns a nonempty string when successful
+    if (fgets(buffer, (int)bufferSize, file) != NULL)
+    {
+        // Remove newline character
+        buffer[strcspn(buffer, "\n")] = '\0';
+
+        // Check if buffer is not empty
+        if (buffer[0] != '\0')
+        {
+            // FIO30-C: Exclude user input from format strings
+            printf("Data read: %s\n", buffer);
+        }
+        else
+        {
+            fprintf(stderr, "No data read from file.\n");
+            fclose(file);
+            return -1;
+        }
+    }
+    else
+    {
+        fprintf(stderr, "Error reading from file.\n");
+        fclose(file);
+        return -1;
+    }
+
+    // Close the file and check for errors
+    if (fclose(file) != 0)
+    {
+        perror("Error closing file");
+        return -1;
+    }
+
+    // MSC32-C: Properly seed pseudorandom number generators
+    {
+        static bool seeded = false;
+        if (!seeded)
+        {
+            // Seed the PRNG with the current time
+            srand((unsigned int)time(NULL));
+            seeded = true;
+        }
+    }
+
+    // Generate a random number
+    int randomNumber = rand();
+    printf("Random number: %d\n", randomNumber);
+
+    // INT18-C: Evaluate integer expressions in a larger size before comparing or assigning to that size
+    unsigned int numOne = UINT_MAX;
+    unsigned int numTwo = 1;
+    unsigned long long result = (unsigned long long)numOne + numTwo;
+
+    if (result > UINT_MAX)
+    {
+        printf("Overflow detected: result = %llu\n", result);
+    }
+    else
+    {
+        unsigned int safeResult = (unsigned int)result;
+        printf("Safe result: %u\n", safeResult);
+    }
+
+    // EXP33-C: Do not read uninitialized memory
+    int numbers[5] = {0}; // Initialize all elements to zero
+    for (int i = 0; i < 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+
+    // ENV33-C: Do not call system()
+    // Instead of using system("rm filename"), use remove()
+    if (remove(filename) != 0)
+    {
+        perror("Error deleting file");
+        return -1;
+    }
+    else
+    {
+        printf("File deleted successfully.\n");
+    }
+
+    // MSC37-C: Ensure that control never reaches the end of a non-void function
+    return 0;
+}
+
+/**
  * @author David Slay
  * @brief Prompts the user and controls flow to the various functions
  * in the program.
  */
 void promptUser(void)
 {
-    printf("Choose an option:\n\t1. Do typing test\n\t2. Read and calculate percentage of even digits from file\n\t3. Password authentication.\n\t4. Calculator.\n");
+    printf("Choose an option:\n\t1. Do typing test.\n\t2. Read and calculate percentage of even digits from file.\n\t3. Password authentication.\n\t4. Calculator.\n\t5. Process data then delete file.\n");
 
     // the valid characters we are reading
     static const char VALID_CHARACTERS[] = "0123456789";
@@ -768,40 +888,77 @@ void promptUser(void)
     {
         // Recommendation STR00-C: Represent characters using an appropriate type
         char operation[10];
-        char continue_answer;
+        char continueAnswer;
 
-        double current_number = 0.0;
+        double currentNum = 0.0;
         printf("Enter number to start:\n>> ");
-        scanf("%lf", &current_number);
+        scanf("%lf", &currentNum);
         do
         {
             printf("Enter operation (-,+,*,/):\n>> ");
             scanf("%s", operation);
             if (strcmp(operation, "-") == 0)
             {
-                current_number = subtractionCalculator(current_number);
+                currentNum = subtractionCalculator(currentNum);
             }
             else if (strcmp(operation, "+") == 0)
             {
-                current_number = additionCalculator(current_number);
+                currentNum = additionCalculator(currentNum);
             }
             else if (strcmp(operation, "*") == 0)
             {
-                current_number = multiplicationCalculator(current_number);
+                currentNum = multiplicationCalculator(currentNum);
             }
             else if (strcmp(operation, "/") == 0)
             {
-                current_number = divisionCalculator(current_number);
+                currentNum = divisionCalculator(currentNum);
             }
             else
             {
                 printf("Incorrect input try again.\n");
             }
-            printf("Current number: %.2f\n", current_number);
+            printf("Current number: %.2f\n", currentNum);
             printf("Do you want to continue (Y/N)?:\n>> ");
-            scanf(" %c", &continue_answer);
-        } while (continue_answer != 'N' && continue_answer != 'n');
-        printf("Final value is: %.2f\n", current_number);
+            scanf(" %c", &continueAnswer);
+        } while (continueAnswer != 'N' && continueAnswer != 'n');
+        printf("Final value is: %.2f\n", currentNum);
+        break;
+    }
+    case 5: // Waleed Chatta
+    {
+        char filename[BUFFER_SIZE];
+
+        printf("Enter the filename to process:\n>> ");
+        if (fgets(filename, sizeof(filename), stdin) != NULL)
+        {
+            // Remove newline character
+            filename[strcspn(filename, "\n")] = '\0';
+
+            // FIO01-C: Be careful using functions that use file names for identification
+            // Validate filename
+            if (filename[0] == '\0' || strstr(filename, "..") != NULL || filename[0] == '/')
+            {
+                fprintf(stderr, "Invalid filename.\n");
+                break; // Exit the case without returning
+            }
+
+            int status = processData(filename);
+
+            // EXP20-C: Perform explicit tests to determine success
+            if (status == 0)
+            {
+                printf("File processed successfully.\n");
+            }
+            else
+            {
+                printf("File processing failed with status %d\n", status);
+            }
+        }
+        else
+        {
+            fprintf(stderr, "Error reading filename.\n");
+            // No return statement; handle error and continue
+        }
         break;
     }
     default: // impossible
