@@ -98,7 +98,6 @@ void readPasswordFromFile(char *password, size_t size, FILE *file)
 /**
  * @author Xavier Zamora
  * @brief Generates an unsigned integer from password ASCII data for authentication purposes and ensures the int does not wrap.
- *
  * Demonstration of rule INT30-C, ensure that unsigned int operations do not wrap.
  *
  * @param password Input password string.
@@ -122,7 +121,6 @@ unsigned int generateUnsignedNumberFromPassword(const char *password)
 /**
  * @author Xavier Zamora
  * @brief Generates a signed integer from password ASCII data for authentication purposes.
- *
  * Demonstration of rule INT32-C, ensure that operations on signed ints do not result in overflow.
  *
  * @param password Input password string.
@@ -403,7 +401,7 @@ double divisionCalculator(double currentValue)
         // Rule INT33 Make sure division and remainder operations do not result in dividing by 0
         if (divideVal == 0)
         {
-            printf("Error can not divide by zero\n");
+            printf("Error: cannot divide by zero\n");
         }
         else
         {
