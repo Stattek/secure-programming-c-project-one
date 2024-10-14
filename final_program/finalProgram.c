@@ -1,5 +1,5 @@
 /**
- * Author: David Slay, Aayaan, Xavier Zamora
+ * Author: David Slay, Aayaan, Xavier Zamora, waleed chatta
  * Summary: Final program for program one
  */
 #include <stdio.h>
@@ -14,7 +14,7 @@
 #include <stdint.h>
 
 #define BUFFER_SIZE 1024
-#define MAX_CHOICE 3 // maximum number of choices
+#define MAX_CHOICE 4 // maximum number of choices
 
 /*
 PRE02-C: Macro replacement lists should be parenthesized
@@ -531,12 +531,133 @@ void *processFileEp(void *arg)
 }
 
 /**
+ * @author waleed chatta
+ * @brief Processes data from a given file as well a this function opens the specified file,
+ * reads data, and performs several operations
+ *
+ * @param filename The name of the file to process.
+ * @return 0 on success, or a negative error code on failure.
+ */
+int process_data(const char *filename)
+{
+    // MSC37-C: Ensure that control never reaches the end of a non-void function
+
+    // FIO01-C: Be careful using functions that use file names for identification
+    // Validate filename
+    if (filename == NULL || strstr(filename, "..") != NULL || filename[0] == '/')
+    {
+        fprintf(stderr, "Invalid filename.\n");
+        return -1;
+    }
+
+    // ERR33-C: Detect and handle standard library errors
+    FILE *file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        perror("Error opening file");
+        return -1;
+    }
+
+    // ARR01-C: Do not apply sizeof to a pointer when taking the size of an array
+    char buffer[100];
+    size_t buffer_size = sizeof(buffer);
+
+    // FIO37-C: Do not assume that fgets() returns a nonempty string when successful
+    if (fgets(buffer, (int)buffer_size, file) != NULL)
+    {
+        // Remove newline character
+        buffer[strcspn(buffer, "\n")] = '\0';
+
+        // Check if buffer is not empty
+        if (buffer[0] != '\0')
+        {
+            // FIO30-C: Exclude user input from format strings
+            printf("Data read: %s\n", buffer);
+        }
+        else
+        {
+            fprintf(stderr, "No data read from file.\n");
+            fclose(file);
+            return -1;
+        }
+    }
+    else
+    {
+        fprintf(stderr, "Error reading from file.\n");
+        fclose(file);
+        return -1;
+    }
+
+    // Close the file and check for errors
+    if (fclose(file) != 0)
+    {
+        perror("Error closing file");
+        return -1;
+    }
+
+    // MSC32-C: Properly seed pseudorandom number generators
+    {
+        static bool seeded = false;
+        if (!seeded)
+        {
+            // Seed the PRNG with the current time
+            srand((unsigned int)time(NULL));
+            seeded = true;
+        }
+    }
+
+    // Generate a random number
+    int random_number = rand();
+    printf("Random number: %d\n", random_number);
+
+    // INT18-C: Evaluate integer expressions in a larger size before comparing or assigning to that size
+    {
+        unsigned int a = UINT_MAX;
+        unsigned int b = 1;
+        unsigned long long result = (unsigned long long)a + b;
+
+        if (result > UINT_MAX)
+        {
+            printf("Overflow detected: result = %llu\n", result);
+        }
+        else
+        {
+            unsigned int safe_result = (unsigned int)result;
+            printf("Safe result: %u\n", safe_result);
+        }
+    }
+
+    // EXP33-C: Do not read uninitialized memory
+    int numbers[5] = {0}; // Initialize all elements to zero
+    for (int i = 0; i < 5; i++)
+    {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+
+    // ENV33-C: Do not call system()
+    // Instead of using system("rm filename"), use remove()
+    if (remove(filename) != 0)
+    {
+        perror("Error deleting file");
+        return -1;
+    }
+    else
+    {
+        printf("File deleted successfully.\n");
+    }
+
+    // MSC37-C: Ensure that control never reaches the end of a non-void function
+    return 0;
+}
+
+/**
  * @brief Prompts the user and controls flow to the various functions
  * in the program.
  */
 void promptUser(void)
 {
-    printf("Choose an option:\n\t1. Do typing test\n\t2. Read and calculate percentage of even digits from file\n\t3. Password authentication.\n");
+    printf("Choose an option:\n\t1. Do typing test\n\t2. Read and calculate percentage of even digits from file\n\t3. Password authentication.\n\t4. Process data from file\n");
 
     // the valid characters we are reading
     static const char VALID_CHARACTERS[] = "0123456789";
@@ -653,6 +774,43 @@ void promptUser(void)
             printf("\nAuthentication failed, your authentication values based on entered password:\n");
             printf("Generated Unsigned Integer: %u\n", enteredUnsigned);
             printf("Generated Signed Integer: %d\n", enteredSigned);
+        }
+        break;
+    }
+    case 4: // waleed chatta
+    {
+        char filename[BUFFER_SIZE];
+
+        printf("Enter the filename to process: ");
+        if (fgets(filename, sizeof(filename), stdin) != NULL)
+        {
+            // Remove newline character
+            filename[strcspn(filename, "\n")] = '\0';
+
+            // FIO01-C: Be careful using functions that use file names for identification
+            // Validate filename
+            if (filename[0] == '\0' || strstr(filename, "..") != NULL || filename[0] == '/')
+            {
+                fprintf(stderr, "Invalid filename.\n");
+                break; // Exit the case without returning
+            }
+
+            int status = process_data(filename);
+
+            // EXP20-C: Perform explicit tests to determine success
+            if (status == 0)
+            {
+                printf("File processed successfully.\n");
+            }
+            else
+            {
+                printf("File processing failed with status %d\n", status);
+            }
+        }
+        else
+        {
+            fprintf(stderr, "Error reading filename.\n");
+            // No return statement; handle error and continue
         }
         break;
     }
