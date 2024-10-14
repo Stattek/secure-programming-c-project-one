@@ -34,27 +34,27 @@ typedef struct
     pthread_mutex_t *mutex;
     size_t maxNumbers;
     size_t bufferSize;
-} ThreadData_ep;
+} ThreadDataEp;
 
 bool doTypingTest(FILE *dstFile, size_t bufSize);
 bool isValidString(char *targetStr, const char *validCharacters);
 void getFileName(char *fileNameStr, int fileNameStrLen);
 void evenPercent(const char *filename);
 void *processFileEp(void *arg);
-//Recommendation DCL20-c explicitly putting void in function when it takes no parameters
+// Recommendation DCL20-c: explicitly putting void in function when it takes no parameters
 void promptUser(void);
 FILE *openPasswordFile(const char *filename);
 void readPasswordFromFile(char *password, size_t size, FILE *file);
 unsigned int generateUnsignedNumberFromPassword(const char *password);
 int generateSignedNumberFromPassword(const char *password);
 bool authenticate(unsigned int savedUnsigned, int savedSigned, const char *password);
-double subtraction_calculator(double current_value);
-double addition_calculator(double current_value);
-double multiplication_calculator(double current_value);
-double division_calculator(double current_value);
+double subtractionCalculator(double currentValue);
+double additionCalculator(double currentValue);
+double multiplicationCalculator(double currentValue);
+double divisionCalculator(double currentValue);
 
 /**
- * Xavier Zamora
+ * @author Xavier Zamora
  * @brief Opens a file and retrieves file pointer.
  *
  * Demonstration of rule MSC41-C, never hard code sensitive information.
@@ -75,7 +75,7 @@ FILE *openPasswordFile(const char *filename)
 }
 
 /**
- * Xavier Zamora
+ * @author Xavier Zamora
  * @brief Reads password from password file and read password.
  *
  * @param password Pointer to buffer where password will be stored.
@@ -95,7 +95,7 @@ void readPasswordFromFile(char *password, size_t size, FILE *file)
 }
 
 /**
- * Xavier Zamora
+ * @author Xavier Zamora
  * @brief Generates an unsigned integer from password ASCII data for authentication purposes and ensures the int does not wrap.
  *
  * Demonstration of rule INT30-C, ensure that unsigned int operations do not wrap.
@@ -119,7 +119,7 @@ unsigned int generateUnsignedNumberFromPassword(const char *password)
 }
 
 /**
- * Xavier Zamora
+ * @author Xavier Zamora
  * @brief Generates a signed integer from password ASCII data for authentication purposes.
  *
  * Demonstration of rule INT32-C, ensure that operations on signed ints do not result in overflow.
@@ -143,7 +143,7 @@ int generateSignedNumberFromPassword(const char *password)
 }
 
 /**
- * Xavier Zamora
+ * @author Xavier Zamora
  * @brief Compares outputs from previous two functions with password input and returns true if equal, and false if not equal.
  *
  * @param savedUnsigned Unsigned integer obtained from password.
@@ -161,6 +161,7 @@ bool authenticate(unsigned int savedUnsigned, int savedSigned, const char *passw
 }
 
 /**
+ * @author David Slay
  * @brief Does a typing test and prints the user input to a file along with results.
  *
  * @param dstFile The destination file to write to.
@@ -319,18 +320,20 @@ bool doTypingTest(FILE *dstFile, size_t bufSize)
  * @param double of current value
  * @return double
  */
-double subtraction_calculator(double current_value){
-    int number_of_arguments;
-    printf("How many times do you want to subtract from inital value?\t");
-    scanf("%d",&number_of_arguments);
+double subtractionCalculator(double currentValue)
+{
+    int numArguments;
+    printf("How many times do you want to subtract from inital value?\n>> ");
+    scanf("%d", &numArguments);
 
-    double subtract_value;
-    for(int i = 0; i < number_of_arguments; i++){
-        printf("Enter number to subtract: \t");
-        scanf("%lf",&subtract_value);
-        current_value -= subtract_value;
+    double subtractVal;
+    for (int i = 0; i < numArguments; i++)
+    {
+        printf("Enter number to subtract:\n>> ");
+        scanf("%lf", &subtractVal);
+        currentValue -= subtractVal;
     }
-    return current_value;
+    return currentValue;
 }
 
 /**
@@ -339,18 +342,20 @@ double subtraction_calculator(double current_value){
  * @param double of current value
  * @return double
  */
-double addition_calculator(double current_value){
-    int number_of_arguments;
-    printf("How many times do you want to add to the inital value?\t");
-    scanf("%d",&number_of_arguments);
+double additionCalculator(double currentValue)
+{
+    int numArguments;
+    printf("How many times do you want to add to the inital value?\n>> ");
+    scanf("%d", &numArguments);
 
-    double add_value;
-    for(int i = 0; i < number_of_arguments; i++){
-        printf("Enter number to add: \t");
-        scanf("%lf",&add_value);
-        current_value += add_value;
+    double addVal;
+    for (int i = 0; i < numArguments; i++)
+    {
+        printf("Enter number to add:\n>> ");
+        scanf("%lf", &addVal);
+        currentValue += addVal;
     }
-    return current_value;
+    return currentValue;
 }
 
 /**
@@ -359,18 +364,20 @@ double addition_calculator(double current_value){
  * @param double of current value
  * @return double
  */
-double multiplication_calculator(double current_value){
-    int number_of_arguments;
-    printf("How many times do you want to multiply?\t");
-    scanf("%d",&number_of_arguments);
+double multiplicationCalculator(double currentValue)
+{
+    int numArguments;
+    printf("How many times do you want to multiply?\n>> ");
+    scanf("%d", &numArguments);
 
-    double multiply_value;
-    for(int i = 0; i < number_of_arguments; i++){
-        printf("Enter number to multiply by: \t");
-        scanf("%lf",&multiply_value);
-        current_value *= multiply_value;
+    double multiplyVal;
+    for (int i = 0; i < numArguments; i++)
+    {
+        printf("Enter number to multiply by:\n>> ");
+        scanf("%lf", &multiplyVal);
+        currentValue *= multiplyVal;
     }
-    return current_value;
+    return currentValue;
 }
 
 /**
@@ -379,30 +386,34 @@ double multiplication_calculator(double current_value){
  * @param double of current value
  * @return double
  */
-double division_calculator(double current_value){
-    //take user input for number of arguments wanted
-    int number_of_arguments;
-    printf("How many times do you want to divide?\t");
-    scanf("%d",&number_of_arguments);
+double divisionCalculator(double currentValue)
+{
+    // take user input for number of arguments wanted
+    int numArguments;
+    printf("How many times do you want to divide?\n>> ");
+    scanf("%d", &numArguments);
 
-    double divide_value;
-    //Rule FLP30 do not use floats for loop counters
-    for(int i = 0; i < number_of_arguments; i++){
-        printf("Enter number to divide by: ");
-        scanf(" %lf",&divide_value);
-        //Rule INT33 Make sure division and remainder operations do not result in dividing by 0
-        if(divide_value == 0){
+    double divideVal;
+    // Rule FLP30 do not use floats for loop counters
+    for (int i = 0; i < numArguments; i++)
+    {
+        printf("Enter number to divide by:\n>> ");
+        scanf(" %lf", &divideVal);
+        // Rule INT33 Make sure division and remainder operations do not result in dividing by 0
+        if (divideVal == 0)
+        {
             printf("Error can not divide by zero\n");
-        }else{
-            current_value = current_value / divide_value;
+        }
+        else
+        {
+            currentValue = currentValue / divideVal;
         }
     }
-    return current_value;
+    return currentValue;
 }
 
-
-
 /**
+ * @author David Slay
  * @brief Checks that a string is valid and only contains characters in the
  * specified character string.
  *
@@ -435,6 +446,7 @@ bool isValidString(char *targetStr, const char *validCharacters)
 }
 
 /**
+ * @author David Slay
  * @brief Gets the name of the file from the user to write to.
  *
  * @param fileNameStr The name of the file to write to.
@@ -450,12 +462,12 @@ void getFileName(char *fileNameStr, int fileNameStrLen)
     Rule FIO38: Do not copy a FILE object.
     This is done by copying a pointer to stdin rather than taking a copy by-value.
      */
-    FILE *my_stdin = stdin;
+    FILE *myStdin = stdin;
     bool isValid = false;
     do
     {
         printf(">> ");
-        fgets(fileNameStr, fileNameStrLen, my_stdin);
+        fgets(fileNameStr, fileNameStrLen, myStdin);
 
         if (isValidString(fileNameStr, VALID_CHARACTERS))
         {
@@ -487,7 +499,7 @@ void evenPercent(const char *filename)
     const size_t BUFFER_SIZE_ep = 256;
 
     pthread_t threads[4];
-    ThreadData_ep ThreadData_ep[4];
+    ThreadDataEp theThreadDataEp[4];
     pthread_mutex_t mutex;
     pthread_mutex_init(&mutex, NULL);
 
@@ -521,15 +533,15 @@ void evenPercent(const char *filename)
 
     for (int i = 0; i < 4; i++)
     {
-        ThreadData_ep[i].filename = (char *)filename;
-        ThreadData_ep[i].startLine = i * linesPerThread;
-        ThreadData_ep[i].endLine = (i == 3) ? totalLines : (i + 1) * linesPerThread;
-        ThreadData_ep[i].finalArrayMods = finalArrayMods;
-        ThreadData_ep[i].finalArrayModsIndex = &finalArrayModsIndex;
-        ThreadData_ep[i].mutex = &mutex;
-        ThreadData_ep[i].maxNumbers = MAX_NUMBERS_ep;
-        ThreadData_ep[i].bufferSize = BUFFER_SIZE_ep;
-        pthread_create(&threads[i], NULL, processFileEp, &ThreadData_ep[i]);
+        theThreadDataEp[i].filename = (char *)filename;
+        theThreadDataEp[i].startLine = i * linesPerThread;
+        theThreadDataEp[i].endLine = (i == 3) ? totalLines : (i + 1) * linesPerThread;
+        theThreadDataEp[i].finalArrayMods = finalArrayMods;
+        theThreadDataEp[i].finalArrayModsIndex = &finalArrayModsIndex;
+        theThreadDataEp[i].mutex = &mutex;
+        theThreadDataEp[i].maxNumbers = MAX_NUMBERS_ep;
+        theThreadDataEp[i].bufferSize = BUFFER_SIZE_ep;
+        pthread_create(&threads[i], NULL, processFileEp, &theThreadDataEp[i]);
     }
 
     for (int i = 0; i < 4; i++)
@@ -570,7 +582,7 @@ void evenPercent(const char *filename)
  */
 void *processFileEp(void *arg)
 {
-    ThreadData_ep *data = (ThreadData_ep *)arg;
+    ThreadDataEp *data = (ThreadDataEp *)arg;
 
     FILE *file = fopen(data->filename, "r");
     if (!file)
@@ -626,6 +638,7 @@ void *processFileEp(void *arg)
 }
 
 /**
+ * @author David Slay
  * @brief Prompts the user and controls flow to the various functions
  * in the program.
  */
@@ -698,10 +711,10 @@ void promptUser(void)
     }
     case 2: // Aayan
     {
-        char fileName_ep[BUFFER_SIZE] = "";
-        getFileName(fileName_ep, BUFFER_SIZE);
+        char fileNameEp[BUFFER_SIZE] = "";
+        getFileName(fileNameEp, BUFFER_SIZE);
 
-        evenPercent(fileName_ep); // call to evenPercent to process the file
+        evenPercent(fileNameEp); // call to evenPercent to process the file
         break;
     }
     case 3: // Xavier Zamora
@@ -751,39 +764,46 @@ void promptUser(void)
         }
         break;
     }
-    case 4: //Colton
-        {
-            //Recommendation STR00-C: Represent characters using an appropriate type
-            char operation[10];
-            char continue_answer;
+    case 4: // Colton
+    {
+        // Recommendation STR00-C: Represent characters using an appropriate type
+        char operation[10];
+        char continue_answer;
 
-            double current_number = 0.0;
-            printf("Enter number to start: \t");
-            scanf("%lf",&current_number);
-            do{
-                printf("Enter operation -,+,*,/\t");
-                scanf("%s",operation);
-                if(strcmp(operation,"-") == 0){
-                    current_number = subtraction_calculator(current_number);
-                }
-                else if(strcmp(operation,"+") == 0){
-                    current_number = addition_calculator(current_number);
-                }
-                else if(strcmp(operation,"*") == 0){
-                    current_number = multiplication_calculator(current_number);
-                }
-                else if(strcmp(operation,"/") == 0){
-                    current_number = division_calculator(current_number);
-                }else{
-                    printf("Incorrect input try again.\n");
-                }
-                printf("Current number: %.2f\n",current_number);
-                printf("Do you want to continue? Y/N:\n");
-                scanf(" %c",&continue_answer);
-            }while(continue_answer != 'N' && continue_answer != 'n');
-            printf("Final value is: %.2f", current_number);
-            break;
-        }
+        double current_number = 0.0;
+        printf("Enter number to start:\n>> ");
+        scanf("%lf", &current_number);
+        do
+        {
+            printf("Enter operation (-,+,*,/):\n>> ");
+            scanf("%s", operation);
+            if (strcmp(operation, "-") == 0)
+            {
+                current_number = subtractionCalculator(current_number);
+            }
+            else if (strcmp(operation, "+") == 0)
+            {
+                current_number = additionCalculator(current_number);
+            }
+            else if (strcmp(operation, "*") == 0)
+            {
+                current_number = multiplicationCalculator(current_number);
+            }
+            else if (strcmp(operation, "/") == 0)
+            {
+                current_number = divisionCalculator(current_number);
+            }
+            else
+            {
+                printf("Incorrect input try again.\n");
+            }
+            printf("Current number: %.2f\n", current_number);
+            printf("Do you want to continue (Y/N)?:\n>> ");
+            scanf(" %c", &continue_answer);
+        } while (continue_answer != 'N' && continue_answer != 'n');
+        printf("Final value is: %.2f\n", current_number);
+        break;
+    }
     default: // impossible
         fprintf(stderr, "User chose an invalid choice\n");
         break;
