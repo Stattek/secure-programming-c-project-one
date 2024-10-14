@@ -1,5 +1,5 @@
 /**
- * Author: David Slay, Aayaan, Xavier Zamora
+ * Author: David Slay, Aayaan, Xavier Zamora, Colton Longstreth
  * Summary: Final program for program one
  */
 #include <stdio.h>
