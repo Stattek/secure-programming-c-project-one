@@ -827,7 +827,7 @@ void promptUser(void)
         doTypingTest(dstFile, BUFFER_SIZE);
         break;
     }
-    case 2: // Aayan
+    case 2: // Aayaan
     {
         char fileNameEp[BUFFER_SIZE] = "";
         getFileName(fileNameEp, BUFFER_SIZE);
